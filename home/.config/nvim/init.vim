@@ -4,12 +4,11 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
-" Plug 'joshdick/onedark.vim'
 Plug 'rakr/vim-one'
-" Plug 'shougo/denite.nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-" Plug 'kien/ctrlp.vim'
+Plug 'vim-syntastic/syntastic'
+Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 set visualbell
@@ -39,7 +38,7 @@ let NERDTreeShowHidden=0
 let NERDTreeIgnore=['.git$','.eggs$','.venv$','\.egg-info$', '__pycache__']
 
 " Follow current file in NERDTree
-autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
+" autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
 
 " augroup init.vim
 "     autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -73,12 +72,15 @@ function! BlaFun(hu)
     wincmd p
 endfunction
 command! -nargs=1 Bla call BlaFun(<q-args>)
-nmap <C-K> :call fzf#run(fzf#wrap('my-stuff', {'source': 'find ~/ -not -path ''*/\.*'' -type d -maxdepth 2', 'sink': 'Bla'}))<cr>
+nmap <C-K> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find ~/ -not -path ''*/\.*'' -type d -maxdepth 2', 'sink': 'Bla'}))<cr>
 
 command! Conf :e ~/.config/nvim/init.vim
-nmap <C-P> :silent :Files .<CR>
-
+nmap <C-P> :silent :GFiles<CR>
+nmap <C-L> :silent :Files .<CR>
+nmap <C-B> :silent :Buffers<CR>
+nmap <C-S> :update<CR>
 
 let g:airline_theme='solarized'
 let g:airline_left_sep=''
 let g:airline_right_sep=''
+
