@@ -34,6 +34,8 @@ set nowrap
 set nofoldenable
 
 let NERDTreeHijackNetrw=1
+let g:netrw_liststyle=3
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,.git,*.pkl,__pycache__
 set wildignore+=*.png,*.jpg,*.tgz,*.tar,*.gz,.venv
@@ -60,7 +62,7 @@ nmap <C-K> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find ~/ -not -
 
 command! Conf :e ~/.config/nvim/init.vim
 nmap <C-P> :silent :GFiles<CR>
-nmap <C-L> :silent :Files .<CR>
+nmap <C-F> :silent :Files .<CR>
 nmap <C-B> :silent :Buffers<CR>
 nmap <C-S> :update<CR>
 
