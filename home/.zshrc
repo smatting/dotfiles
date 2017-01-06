@@ -35,7 +35,8 @@ ZSH=$HOME/.oh-my-zsh
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git common-aliases asdgasdg)
+# plugins=(git common-aliases asdgasdg)
+plugins=(git common-aliases)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -54,7 +55,7 @@ bindkey '^R' history-incremental-search-backward
 # Customize to your needs...
 
 # Load zsh-syntax-highlighting.
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #
 # # Load zsh-autosuggestions.
 source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
