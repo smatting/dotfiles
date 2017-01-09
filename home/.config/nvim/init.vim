@@ -10,13 +10,20 @@ call plug#begin()
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-fugitive'
-Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
+" Plug 'vim-syntastic/syntastic'
+Plug 'neomake/neomake'
+" Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'terryma/vim-multiple-cursors'
+
 " Colorschemes
 Plug 'flazz/vim-colorschemes'
 Plug 'rakr/vim-one'
@@ -45,11 +52,17 @@ set smarttab
 set nowrap
 set nofoldenable
 
+let g:ranger_map_keys = 0
+
+autocmd! BufWritePost * Neomake
+
 let NERDTreeHijackNetrw=1
 let g:netrw_liststyle=3
 let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 
-fuzzy set wildignore+=*/tmp/*,*.so,*.swp,*.zip,.git,*.pkl,__pycache__
+let g:deoplete#enable_at_startup = 1
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,.git,*.pkl,__pycache__
 set wildignore+=*.png,*.jpg,*.tgz,*.tar,*.gz,.venv
 
 
@@ -57,7 +70,8 @@ if (empty($TMUX))
   if (has("termguicolors"))
     set termguicolors
     set background=dark
-    colorscheme amcolors
+    colorscheme one
+    :hi MatchParen guifg=#cccccc guibg=#00cc33
   endif
 endif
 
@@ -79,6 +93,8 @@ nmap <C-P> :silent :GFiles<CR>
 nmap <C-F> :silent :Files .<CR>
 nmap <C-B> :silent :Buffers<CR>
 nmap <C-S> :write<CR>
+nmap - :Ranger<CR>
+map <leader>f :RangerWorkingDirectory<CR>
 
 
 let g:airline_theme='solarized'

@@ -75,6 +75,7 @@ fi
 alias staging-1="ssh -t staging-coruscant-1 'sudo tmux attach'"
 alias production-2="ssh -t production-coruscant-2 'sudo tmux attach'"
 alias production-2-tunnel="ssh -fN production-coruscant-2-tunnel"
+alias venv="source ./.venv/bin/activate"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
