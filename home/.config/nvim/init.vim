@@ -33,7 +33,7 @@ Plug 'muellan/am-colors'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 call plug#end()
 
-set visualbell
+set novisualbell
 set noerrorbells
 "set cursorline
 set number

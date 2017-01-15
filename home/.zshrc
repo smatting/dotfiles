@@ -58,12 +58,12 @@ bindkey '^R' history-incremental-search-backward
 # source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #
 # # Load zsh-autosuggestions.
-source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
+# source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
 
-zle-line-init() {
-    zle autosuggest-start
-}
-zle -N zle-line-init
+# zle-line-init() {
+#     zle autosuggest-start
+# }
+# zle -N zle-line-init
 
 bindkey '^f' vi-end-of-line
 
