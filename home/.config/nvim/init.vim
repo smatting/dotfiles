@@ -40,7 +40,6 @@ set number
 set hidden
 set colorcolumn=80
 set clipboard=unnamedplus
-set autoread "automatically update files if externally changed
 
 "indenting
 set autoindent
@@ -51,6 +50,7 @@ set expandtab
 set smarttab
 set nowrap
 set nofoldenable
+set autoread
 
 let g:ranger_map_keys = 0
 
@@ -75,6 +75,7 @@ if (empty($TMUX))
   endif
 endif
 
+
 " vertical bars
 set fillchars+=vert:\  
 hi VertSplit ctermbg=NONE guibg=#444444
@@ -93,6 +94,7 @@ nmap <C-P> :silent :GFiles<CR>
 nmap <C-F> :silent :Files .<CR>
 nmap <C-B> :silent :Buffers<CR>
 nmap <C-S> :write<CR>
+nmap <C-H> :nohls<CR>
 nmap - :Ranger<CR>
 map <leader>f :RangerWorkingDirectory<CR>
 
