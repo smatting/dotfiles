@@ -68,6 +68,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
+    , ((modm .|. shiftMask, xK_l     ), spawn "slock")
+
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
 

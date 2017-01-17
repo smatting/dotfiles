@@ -5,6 +5,8 @@
 " * project-wide fuzzy search
 " * Problem: GFiles only works if a file from the repo has been opened.
 " *          What i want is a GFiles search where the repo is taken from CWD
+" 
+" if terminal is too small <C-K> will not execute immediaetely
 "
 call plug#begin()
 Plug 'tpope/vim-surround'
@@ -71,7 +73,7 @@ if (empty($TMUX))
     set termguicolors
     set background=dark
     colorscheme one
-    :hi MatchParen guifg=#cccccc guibg=#00cc33
+    :hi MatchParen guifg=#ccffff guibg=#444444
   endif
 endif
 
