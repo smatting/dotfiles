@@ -51,8 +51,10 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#000000"
-myFocusedBorderColor = "#aaaaff"
+myNormalBorderColor  = "#123f72"
+myFocusedBorderColor = "#c43ff0"
+
+
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -72,6 +74,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
+
+    -- alt+f4 closes windows
+    , ((mod1Mask, xK_F4     ), kill)
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
