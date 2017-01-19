@@ -73,7 +73,7 @@ if (empty($TMUX))
     set termguicolors
     set background=dark
     colorscheme one
-    :hi MatchParen guifg=#ccffff guibg=#444444
+    hi MatchParen guifg=#ccffff guibg=#444444
   endif
 endif
 

@@ -11,6 +11,11 @@ import XMonad
 import Data.Monoid
 import System.Exit
 
+import XMonad.Hooks.ManageDocks
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.EZConfig(additionalKeys)
+import System.IO
+
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -188,19 +193,21 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = tiled ||| Mirror tiled ||| Full
-  where
-     -- default tiling algorithm partitions the screen into two panes
-     tiled   = Tall nmaster delta ratio
+myLayout = avoidStruts $ layoutHook defaultConfig
 
-     -- The default number of windows in the master pane
-     nmaster = 1
+-- myLayout = tiled ||| Mirror tiled ||| Full
+--   where
+--      -- default tiling algorithm partitions the screen into two panes
+--      tiled   = Tall nmaster delta ratio
 
-     -- Default proportion of screen occupied by master pane
-     ratio   = 1/2
+--      -- The default number of windows in the master pane
+--      nmaster = 1
 
-     -- Percent of screen to increment by when resizing panes
-     delta   = 3/100
+--      -- Default proportion of screen occupied by master pane
+--      ratio   = 1/2
+
+--      -- Percent of screen to increment by when resizing panes
+--      delta   = 3/100
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -217,11 +224,13 @@ myLayout = tiled ||| Mirror tiled ||| Full
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
-myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+myManageHook = manageDocks <+> manageHook defaultConfig
+
+-- myManageHook = composeAll
+--     [ className =? "MPlayer"        --> doFloat
+--     , className =? "Gimp"           --> doFloat
+--     , resource  =? "desktop_window" --> doIgnore
+--     , resource  =? "kdesktop"       --> doIgnore ]
 
 ------------------------------------------------------------------------
 -- Event handling
