@@ -47,7 +47,7 @@ programs:								      \
 		   "My Movies" 	mplayer -wid $XSCREENSAVER_WINDOW -fs	      \
 				  -loop 0 -nosound -really-quiet -nolirc      \
 				  -vo x11 -nostop-xscreensaver		      \
-				  ~/.wallpapers/sierra.mp4		    \n\
+				  ~/.wallpapers/matlucas.mp4		    \n\
 				maze -root				    \n\
   GL: 				superquadrics -root			    \n\
 				attraction -root			    \n\
