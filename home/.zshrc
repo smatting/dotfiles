@@ -72,6 +72,8 @@ then
     source $HOME/.profile
 fi
 
+eval $(dircolors ~/.dircolors)
+
 alias staging-1="ssh -t staging-coruscant-1 'sudo tmux attach'"
 alias production-2="ssh -t production-coruscant-2 'sudo tmux attach'"
 alias production-2-tunnel="ssh -fN production-coruscant-2-tunnel"
