@@ -25,7 +25,7 @@ Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
                     , Run Network "eth1" ["-L","0","-H","32",
                                           "--normal","green","--high","red"] 10
                     , Run Cpu ["-L","3","-H","50",
-                               "--normal","green","--high","red"] 10
+                               "--normal","gray","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Swap [] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
@@ -33,6 +33,5 @@ Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% * %swap% | %eth0% - %eth1% }\
-                    \{ <fc=#2f73bf>%date%</fc>"
+       , template = "<fc=#2f73bf>%date%</fc> | %cpu% | %memory% * %swap% }{"
        }
