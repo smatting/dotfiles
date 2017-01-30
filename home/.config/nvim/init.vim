@@ -99,6 +99,7 @@ nmap <C-S> :write<CR>
 nmap <C-H> :nohls<CR>
 nmap - :Ranger<CR>
 map <leader>f :RangerWorkingDirectory<CR>
+map <leader>j :%!python -m json.tool<CR>
 
 
 let g:airline_theme='solarized'
