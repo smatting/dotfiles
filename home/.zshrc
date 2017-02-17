@@ -82,3 +82,5 @@ alias venv="source ./.venv/bin/activate"
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 export PYTHONIOENCODING=utf-8:surrogateescape
+
+source ~/.environment.sh
