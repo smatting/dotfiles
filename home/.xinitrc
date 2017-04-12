@@ -5,5 +5,6 @@ xmobar ~/.xmobarrc &
 compton &
 volti &
 feh --bg-scale ~/.wallpapers/highway_by_axiomdesign-d9em9fs.jpg
+dropbox start
 
 exec /usr/local/bin/xmonad
