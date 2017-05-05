@@ -10,6 +10,7 @@
 "
 call plug#begin()
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-eunuch'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'tpope/vim-vinegar'
@@ -25,6 +26,7 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'sjl/gundo.vim'
 
 " Colorschemes
 Plug 'flazz/vim-colorschemes'
@@ -100,6 +102,8 @@ nmap <C-H> :nohls<CR>
 nmap - :Ranger<CR>
 map <leader>f :RangerWorkingDirectory<CR>
 map <leader>j :%!python -m json.tool<CR>
+" set cd to directory of opened file
+map <leader>cd :cd %:p:h<CR>
 
 
 let g:airline_theme='solarized'
