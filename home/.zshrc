@@ -86,3 +86,5 @@ export PYTHONIOENCODING=utf-8:surrogateescape
 source ~/.environment.sh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+alias here="x-terminal-emulator > /dev/null 2>&1 & disown"
