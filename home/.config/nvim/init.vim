@@ -27,6 +27,7 @@ Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
+Plug 'godlygeek/tabular'
 
 " Colorschemes
 Plug 'flazz/vim-colorschemes'
@@ -86,7 +87,7 @@ hi VertSplit ctermbg=NONE guibg=#444444
 set foldcolumn=1
 
 function! BlaFun(hu)
-    exe "cd! " a:hu
+    exe "lcd! " a:hu
     let g:netrw_list_hide= netrw_gitignore#Hide() . ',' . '\(^\|\s\s\)\zs\.\S\+'
 endfunction
 
@@ -104,6 +105,8 @@ map <leader>f :RangerWorkingDirectory<CR>
 map <leader>j :%!python -m json.tool<CR>
 " set cd to directory of opened file
 map <leader>cd :cd %:p:h<CR>
+" delete all buffers
+map <leader>dab :%bdelete<CR>
 
 
 let g:airline_theme='solarized'
