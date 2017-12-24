@@ -9,25 +9,49 @@
 " if terminal is too small <C-K> will not execute immediaetely
 "
 call plug#begin()
+" brackets editing and more
 Plug 'tpope/vim-surround'
+
+" :Rename and co
 Plug 'tpope/vim-eunuch'
+
+" Nice status bar
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'tpope/vim-vinegar'
+
+" gc - comment toggling
 Plug 'tpope/vim-commentary'
+
+" Super-fast searching throug stuff, :Ag, :Buffers and more
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-fugitive'
-" Plug 'vim-syntastic/syntastic'
-Plug 'neomake/neomake'
-" Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Indenting in python files to PEP8 standard
 Plug 'hynek/vim-python-pep8-indent'
+
+" :Ranger - start the ranger file commander
 Plug 'francoiscabrol/ranger.vim'
+
+" So that bufffers opened by ranger get closed
 Plug 'rbgrouleff/bclose.vim'
+
+" <C-N> - multiple cursor; great for renaming
 Plug 'terryma/vim-multiple-cursors'
+
+" :GundoToggle
 Plug 'sjl/gundo.vim'
+
+" line up text
 Plug 'godlygeek/tabular'
+
+Plug 'vim-syntastic/syntastic'
+Plug 'eagletmt/ghcmod-vim'
+Plug 'eagletmt/neco-ghc'
+Plug 'Shougo/neocomplete.vim'
+Plug 'Shougo/vimproc.vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
 
 " Colorschemes
 Plug 'flazz/vim-colorschemes'
@@ -36,6 +60,11 @@ Plug 'zanglg/nova.vim'
 Plug 'muellan/am-colors'
 " Plug 'scrooloose/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Plug 'neomake/neomake'
+" Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'rbgrouleff/bclose.vim'
 call plug#end()
 
 set novisualbell
@@ -59,7 +88,7 @@ set autoread
 
 let g:ranger_map_keys = 0
 
-autocmd! BufWritePost * Neomake
+" autocmd! BufWritePost * Neomake
 
 let NERDTreeHijackNetrw=1
 let g:netrw_liststyle=3
@@ -107,9 +136,24 @@ map <leader>j :%!python -m json.tool<CR>
 map <leader>cd :cd %:p:h<CR>
 " delete all buffers
 map <leader>dab :%bdelete<CR>
+map <Leader>s :SyntasticToggleMode<CR>
+
+" ghc-mod type helpers
+map <silent> tw :GhcModTypeInsert<CR>
+map <silent> ts :GhcModSplitFunCase<CR>
+map <silent> tq :GhcModType<CR>
+map <silent> te :GhcModTypeClear<CR>
 
 
 let g:airline_theme='solarized'
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
+" recommended by syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
