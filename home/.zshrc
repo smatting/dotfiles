@@ -90,3 +90,6 @@ export LANG=en_US.UTF-8
 
 alias here="x-terminal-emulator > /dev/null 2>&1 & disown"
 DISABLE_AUTO_TITLE="true"
+
+alias ls="ls -G --color=auto"
+alias vim="nvim"

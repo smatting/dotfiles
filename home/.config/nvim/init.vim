@@ -26,8 +26,9 @@ Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
-" Indenting in python files to PEP8 standard
+" Python
 Plug 'hynek/vim-python-pep8-indent'
+Plug 'nvie/vim-flake8'
 
 " :Ranger - start the ranger file commander
 Plug 'francoiscabrol/ranger.vim'
@@ -43,6 +44,8 @@ Plug 'sjl/gundo.vim'
 
 " line up text
 Plug 'godlygeek/tabular'
+
+Plug 'elmcast/elm-vim'
 
 Plug 'vim-syntastic/syntastic'
 Plug 'eagletmt/ghcmod-vim'
@@ -72,7 +75,7 @@ set noerrorbells
 "set cursorline
 set number
 set hidden
-set colorcolumn=80
+set colorcolumn=""
 set clipboard=unnamedplus
 
 "indenting
@@ -89,6 +92,8 @@ set autoread
 let g:ranger_map_keys = 0
 
 " autocmd! BufWritePost * Neomake
+
+au FileType haskell setlocal shiftwidth=2 tabstop=2 
 
 let NERDTreeHijackNetrw=1
 let g:netrw_liststyle=3
