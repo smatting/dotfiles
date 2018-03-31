@@ -13,7 +13,8 @@ import System.Exit
 
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
+import System.Taffybar.Hooks.PagerHints (pagerHints)
 import System.IO
 
 import qualified XMonad.StackSet as W
@@ -22,7 +23,7 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "x-terminal-emulator"
+myTerminal      = "st"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -60,6 +61,13 @@ myNormalBorderColor  = "#123f72"
 myFocusedBorderColor = "#c43ff0"
 
 
+myAdditionalKeys = [
+      ("<XF86MonBrightnessUp>", spawn "light -Ap 10")
+    , ("<XF86MonBrightnessDown>", spawn "light -Up 10")
+    , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +1.5%")
+    , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@  -1.5%")
+    , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle") 
+    ]
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -79,9 +87,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
-
-    -- alt+f4 closes windows
-    , ((mod1Mask, xK_F4     ), kill)
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
@@ -266,7 +271,7 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad defaults
+main = xmonad $ docks (defaults `additionalKeysP` myAdditionalKeys)
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
