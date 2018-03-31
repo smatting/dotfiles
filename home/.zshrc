@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+export ZSH=/nix/store/n1rsac9kjhgv18vcs1ncycwnc6srvxsh-oh-my-zsh-2018-01-22/share/oh-my-zsh
+# ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -88,7 +89,7 @@ source ~/.environment.sh
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-alias here="x-terminal-emulator > /dev/null 2>&1 & disown"
+alias here="st > /dev/null 2>&1 & disown"
 DISABLE_AUTO_TITLE="true"
 
 alias ls="ls -G --color=auto"
