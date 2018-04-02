@@ -38,7 +38,7 @@ main = do
                                                       ]
                                   , graphLabel = Just "io"
                                   }
-  let clock = textClockNew Nothing "<span fgcolor=\"#c43ff0\">%Y-%m-%d %H:%M</span>" 1
+  let clock = textClockNew Nothing "<span fgcolor=\"#ffffff\">%Y-%m-%d %H:%M</span>" 1
       -- pager = taffyPagerHUDNew defaultPagerConfig defaultWorkspaceHUDConfig
       note = notifyAreaNew defaultNotificationConfig
       wea = weatherNew (defaultWeatherConfig "KMSN") 10

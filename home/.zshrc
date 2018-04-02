@@ -37,7 +37,7 @@ export ZSH=/nix/store/n1rsac9kjhgv18vcs1ncycwnc6srvxsh-oh-my-zsh-2018-01-22/shar
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # plugins=(git common-aliases asdgasdg)
-plugins=(git common-aliases)
+plugins=(git common-aliases vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -50,8 +50,8 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=" %{$reset_color%}"
 #eval `dircolors ~/.dircolors`
 
 # vim movement
-set -o vi
-bindkey '^R' history-incremental-search-backward
+# set -o vi
+# bindkey '^R' history-incremental-search-backward
 
 # Customize to your needs...
 
@@ -94,3 +94,5 @@ DISABLE_AUTO_TITLE="true"
 
 alias ls="ls -G --color=auto"
 alias vim="nvim"
+
+eval `dircolors ~/.dircolors`

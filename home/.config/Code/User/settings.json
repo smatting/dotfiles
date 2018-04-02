@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.colorTheme": "Monokai",
     "editor.fontSize": 16,
   // Controls the font size in pixels of the terminal.
     "terminal.integrated.fontSize": 16,
@@ -15,5 +15,15 @@
       "**/CVS": true,
       "**/.DS_Store": true
     },
-    "window.zoomLevel": 0,
+    "vim.handleKeys":{
+      "<C-n>": false,
+      "<C-w>": true,
+      "<C-b>": false,
+      "<C-f>": false
+    },
+    "window.zoomLevel": 0.5,
+    "workbench.activityBar.visible": false,
+    "window.menuBarVisibility": "toggle",
+    "editor.useTabStops": false,
+    "editor.minimap.enabled": false,
 }
