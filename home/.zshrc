@@ -68,9 +68,11 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=" %{$reset_color%}"
 
 bindkey '^f' vi-end-of-line
 
-if [[ -f $HOME/.profile ]]
-then
-    source $HOME/.profile
+# if [[ -f $HOME/.profile ]]; then
+if [[ -o login ]]; then
+    if ! [ "$PROFILE_LOADED" ]; then
+        source $HOME/.profile
+    fi
 fi
 
 # eval $(dircolors ~/.dircolors)
@@ -83,11 +85,7 @@ alias gs="git status"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
-export PYTHONIOENCODING=utf-8:surrogateescape
 
-source ~/.environment.sh
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
 
 alias here="st > /dev/null 2>&1 & disown"
 DISABLE_AUTO_TITLE="true"

@@ -18,6 +18,7 @@
     "vim.handleKeys":{
       "<C-n>": false,
       "<C-w>": true,
+      "<C-d>": true,
       "<C-b>": false,
       "<C-f>": false
     },
@@ -26,4 +27,5 @@
     "window.menuBarVisibility": "toggle",
     "editor.useTabStops": false,
     "editor.minimap.enabled": false,
+    "git.autofetch": true,
 }

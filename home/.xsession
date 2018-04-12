@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/sh -l
 
+dunst &
 taffybar &
 sct --nightTemp 5000 &
 libinput-gestures &
