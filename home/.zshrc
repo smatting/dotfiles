@@ -37,13 +37,13 @@ export ZSH=/nix/store/n1rsac9kjhgv18vcs1ncycwnc6srvxsh-oh-my-zsh-2018-01-22/shar
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # plugins=(git common-aliases asdgasdg)
-plugins=(git common-aliases vi-mode)
+plugins=(git vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 
-PROMPT='%{$fg[gray]%}%m %{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}λ%{$reset_color%} '
+PROMPT='%{$fg[gray]%}%m [$IN_NIX_SHELL] %{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}λ%{$reset_color%} '
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX=" %{$reset_color%}"
 
@@ -68,11 +68,8 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=" %{$reset_color%}"
 
 bindkey '^f' vi-end-of-line
 
-# if [[ -f $HOME/.profile ]]; then
-if [[ -o login ]]; then
-    if ! [ "$PROFILE_LOADED" ]; then
-        source $HOME/.profile
-    fi
+if [[ -f $HOME/.profile ]]; then
+    source $HOME/.profile
 fi
 
 # eval $(dircolors ~/.dircolors)
@@ -92,5 +89,21 @@ DISABLE_AUTO_TITLE="true"
 
 alias ls="ls -G --color=auto"
 alias vim="nvim"
+alias ipy="nix-shell --command ipython"
+alias gg='git log --graph --all --oneline'
+alias ns='nix-shell --command zsh'
 
 eval `dircolors ~/.dircolors`
+
+function nvm-use () {
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    nvm use --delete-prefix v10.9.0 node
+}
+
+if [ -e ~/.nix-profile/bin/ghc ]; then
+  export NIX_GHC="$HOME/.nix-profile/bin/ghc"
+  export NIX_GHCPKG="$HOME/.nix-profile/bin/ghc-pkg"
+  export NIX_GHC_DOCDIR="$HOME/.nix-profile/share/doc/ghc/html"
+  export NIX_GHC_LIBDIR="$HOME/.nix-profile/lib/ghc-$($NIX_GHC --numeric-version)"
+fi

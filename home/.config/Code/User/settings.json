@@ -1,13 +1,25 @@
 {
-    "workbench.colorTheme": "Monokai",
-    "editor.fontSize": 16,
+  "editor.fontSize": 16,
   // Controls the font size in pixels of the terminal.
     "terminal.integrated.fontSize": 16,
 
     "vim.useSystemClipboard": true,
-    "editor.cursorBlinking": "solid",
+
+    "editor.tabSize": 4,
+
+    "editor.detectIndentation": true,
+
+  "editor.renderIndentGuides": false,
+   "editor.cursorBlinking": "solid",
+
+  "editor.renderWhitespace": "none",
+
+  "workbench.editor.showTabs": false,
 
     "files.exclude": {
+      "**/.mypy_cache": true,
+      "**/__pycache__": true,
+      "**/.vscode": true,
       "**/.git": true,
       "**/*.egg-info": true,
       "**/.svn": true,
@@ -15,17 +27,65 @@
       "**/CVS": true,
       "**/.DS_Store": true
     },
+
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/.mypy_cache": true,
+      "**/__pycache__": true,
+      "**/.vscode": true,
+      "**/.git": true,
+      "**/*.egg-info": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true
+    },
+
     "vim.handleKeys":{
       "<C-n>": false,
       "<C-w>": true,
       "<C-d>": true,
       "<C-b>": false,
-      "<C-f>": false
+      "<C-f>": false,
+      "<C-i>": true,
+      "<C-o>": true
     },
-    "window.zoomLevel": 0.5,
+    "window.zoomLevel": 0,
     "workbench.activityBar.visible": false,
     "window.menuBarVisibility": "toggle",
     "editor.useTabStops": false,
     "editor.minimap.enabled": false,
     "git.autofetch": true,
-}
+
+    // Stefan: set this up on a per-folder basis
+    // "python.linting.pylintEnabled": false,
+    // "python.linting.flake8Enabled": true,
+    // "python.linting.flake8Args": ["--ignore=E501,E202,E201,W293,W292,E221", "--verbose"],
+    // "python.linting.mypyEnabled": false,
+    // "python.linting.mypyArgs": ["--ignore-missing-imports", " --strict-optional"],
+
+    "files.associations": {
+      "*.jinja": "jinja"
+    },
+
+    // Special tags' foreground colors
+    "todo.tags.foregroundColors": [
+      "#000000",
+      "#000000",
+    ],
+
+    // Special tags' names
+    "todo.tags.names": [
+      "prio",
+      "current",
+    ],
+
+    "todo.tags.backgroundColors": [
+      "#bacff2",
+      "#2aa198",
+    ],
+    "workbench.colorTheme": "Solarized Light",
+    "extensions.ignoreRecommendations": true,
+
+  }
