@@ -72,7 +72,7 @@ main = do
       -- note = notifyAreaNew defaultNotificationConfig
       wea = weatherNew (defaultWeatherConfig "KMSN") 10
       mpris = mprisNew defaultMPRISConfig
-      myweather = commandRunnerNew 3600.0 "openweather" [] "no weather Info" "#ffffff"
+      myweather = commandRunnerNew 300.0 "openweather" [] "no weather Info" "#ffffff"
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       mem = pollingGraphNew memCfg 1 memCallback
       battery = textBatteryNew "$time$" 10
@@ -83,8 +83,8 @@ main = do
   cpu2 <- makeCpuBar "cpu2"
   cpu3 <- makeCpuBar "cpu3"
   -- defaultTaffybar defaultTaffybarConfig { startWidgets = [ pager, note ]
-  defaultTaffybar defaultTaffybarConfig { startWidgets = []
-                                        , endWidgets = reverse [myweather, clock, tray, battery, mem, cpu0, cpu1, cpu2, cpu3  ]
+  defaultTaffybar defaultTaffybarConfig { startWidgets = [myweather]
+                                        , endWidgets = reverse [ tray, battery, mem, cpu0, cpu1, cpu2, cpu3, clock ]
                                         , monitorNumber = 1
                                         }
 

@@ -16,6 +16,9 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
 import System.Taffybar.Hooks.PagerHints (pagerHints)
 import System.IO
+import Brightness
+
+import System.Process
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -62,8 +65,8 @@ myFocusedBorderColor = "#c43ff0"
 
 
 myAdditionalKeys = [
-      ("<XF86MonBrightnessUp>", spawn "light -Ap 10")
-    , ("<XF86MonBrightnessDown>", spawn "light -Up 10")
+      ("<XF86MonBrightnessUp>", catchIO (adjustBrightness Up) )
+    , ("<XF86MonBrightnessDown>", catchIO (adjustBrightness Down) )
     , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +1.5%")
     , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@  -1.5%")
     , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle") 
@@ -83,7 +86,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
-    , ((modm .|. shiftMask, xK_l     ), spawn "gksudo slock")
+    , ((modm .|. shiftMask, xK_l     ), spawn "slock")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_d     ), kill)
