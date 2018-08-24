@@ -75,7 +75,10 @@ main = do
       myweather = commandRunnerNew 300.0 "openweather" [] "no weather Info" "#ffffff"
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       mem = pollingGraphNew memCfg 1 memCallback
-      battery = textBatteryNew "$time$" 10
+      -- battery = textBatteryNew "$time$" 10
+      --battery = commandRunnerNew 10.0 "acpi" [] "?" "#ffffff"
+      battery = commandRunnerNew 10.0 "sh" ["-c", "acpi | sed -e 's/Battery 0: //' | tr -d '\n'"] "?" "#ffffff"
+
       tray = systrayNew
 
   cpu0 <- makeCpuBar "cpu0"
@@ -84,7 +87,7 @@ main = do
   cpu3 <- makeCpuBar "cpu3"
   -- defaultTaffybar defaultTaffybarConfig { startWidgets = [ pager, note ]
   defaultTaffybar defaultTaffybarConfig { startWidgets = [myweather]
-                                        , endWidgets = reverse [ tray, battery, mem, cpu0, cpu1, cpu2, cpu3, clock ]
+                                        , endWidgets = reverse [ battery, tray, mem, cpu0, cpu1, cpu2, cpu3, clock ]
                                         , monitorNumber = 1
                                         }
 
