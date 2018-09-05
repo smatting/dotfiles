@@ -12,6 +12,9 @@ call plug#begin()
 " brackets editing and more
 Plug 'tpope/vim-surround'
 
+" ]q [q paired mappings
+Plug 'tpope/vim-unimpaired'
+
 " :Rename and co
 Plug 'tpope/vim-eunuch'
 
@@ -33,6 +36,8 @@ Plug 'nvie/vim-flake8'
 " :Ranger - start the ranger file commander
 Plug 'francoiscabrol/ranger.vim'
 
+" Plug 'tpope/vim-vinegar'
+
 " So that bufffers opened by ranger get closed
 Plug 'rbgrouleff/bclose.vim'
 
@@ -47,11 +52,11 @@ Plug 'godlygeek/tabular'
 
 Plug 'elmcast/elm-vim'
 
-Plug 'vim-syntastic/syntastic'
-Plug 'eagletmt/ghcmod-vim'
-Plug 'eagletmt/neco-ghc'
+" Plug 'vim-syntastic/syntastic'
+" Plug 'eagletmt/ghcmod-vim'
+" Plug 'eagletmt/neco-ghc'
 Plug 'Shougo/neocomplete.vim'
-Plug 'Shougo/vimproc.vim'
+" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
@@ -68,6 +73,28 @@ Plug 'muellan/am-colors'
 " Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'rbgrouleff/bclose.vim'
+"
+Plug 'vim-scripts/alex.vim'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'andy-morris/happy.vim'
+
+Plug 'LnL7/vim-nix'
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': './install.sh'
+    \ }
+
+Plug 'dracula/vim'
+
+" Asynchronous linter
+Plug 'w0rp/ale'
+
+Plug 'ludovicchabant/vim-gutentags'
+
+Plug 'jlanzarotta/bufexplorer'
+
+"
 call plug#end()
 
 set novisualbell
@@ -93,6 +120,7 @@ let g:ranger_map_keys = 0
 
 " autocmd! BufWritePost * Neomake
 
+autocmd BufNewFile,BufRead *.x   set syntax=alex
 au FileType haskell setlocal shiftwidth=2 tabstop=2 
 
 let NERDTreeHijackNetrw=1
@@ -103,13 +131,14 @@ let g:deoplete#enable_at_startup = 1
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,.git,*.pkl,__pycache__
 set wildignore+=*.png,*.jpg,*.tgz,*.tar,*.gz,.venv
+set wildignore+=*/node_modules/*,*/build/*
 
 
 if (empty($TMUX))
   if (has("termguicolors"))
     set termguicolors
     set background=dark
-    colorscheme one
+    colorscheme dracula
     hi MatchParen guifg=#ccffff guibg=#444444
   endif
 endif
@@ -134,20 +163,24 @@ nmap <C-F> :silent :Files .<CR>
 nmap <C-B> :silent :Buffers<CR>
 nmap <C-S> :write<CR>
 nmap <C-H> :nohls<CR>
+
 nmap - :Ranger<CR>
-map <leader>f :RangerWorkingDirectory<CR>
+nmap _ :RangerWorkingDirectory<CR>
+
 map <leader>j :%!python -m json.tool<CR>
 " set cd to directory of opened file
 map <leader>cd :cd %:p:h<CR>
 " delete all buffers
 map <leader>dab :%bdelete<CR>
-map <Leader>s :SyntasticToggleMode<CR>
 
 " ghc-mod type helpers
-map <silent> tw :GhcModTypeInsert<CR>
-map <silent> ts :GhcModSplitFunCase<CR>
-map <silent> tq :GhcModType<CR>
-map <silent> te :GhcModTypeClear<CR>
+" map <silent> tw :GhcModTypeInsert<CR>
+" map <silent> ts :GhcModSplitFunCase<CR>
+" map <silent> tq :GhcModType<CR>
+" map <silent> te :GhcModTypeClear<CR>
+
+map <F11> :cprev<CR>
+map <F12> :cnext<CR>
 
 
 let g:airline_theme='solarized'
@@ -155,10 +188,36 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 
 " recommended by syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" map <Leader>s :SyntasticToggleMode<CR>
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_python_checkers = ["flake8"]
+
+"let g:ale_python_mypy_options = "--ignore-missing-imports --strict-optional"
+
+let g:ale_linters = {
+    \ 'python': ['flake8', 'mypy']
+\ }
+
+set mouse=a
+
+set rtp+=~/.config/nvim/plugged/LanguageClient-neovim
+let g:LanguageClient_serverCommands = { 'haskell': ['hie-8.2'] }
+
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
+map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
+map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
+map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
+map <Leader>lb :call LanguageClient#textDocument_references()<CR>
+map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
+map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
+
+autocmd VimEnter * nested :source ~/.session.vim
+autocmd VimLeave * :mksession! ~/.session.vim
