@@ -80,10 +80,10 @@ Plug 'andy-morris/happy.vim'
 
 Plug 'LnL7/vim-nix'
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': './install.sh'
-    \ }
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': './install.sh'
+"     \ }
 
 Plug 'dracula/vim'
 
@@ -93,6 +93,8 @@ Plug 'w0rp/ale'
 Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'jlanzarotta/bufexplorer'
+
+Plug 'vmchale/dhall-vim'
 
 "
 call plug#end()
@@ -114,7 +116,9 @@ set expandtab
 set smarttab
 set nowrap
 set nofoldenable
+
 set autoread
+au CursorHold,FocusGained,BufEnter * checktime
 
 let g:ranger_map_keys = 0
 
@@ -149,13 +153,19 @@ set fillchars+=vert:\
 hi VertSplit ctermbg=NONE guibg=#444444
 set foldcolumn=1
 
-function! BlaFun(hu)
-    exe "lcd! " a:hu
-    let g:netrw_list_hide= netrw_gitignore#Hide() . ',' . '\(^\|\s\s\)\zs\.\S\+'
+function! BlaFun(dir)
+    exe "lcd! " a:dir
+    exe "pwd"
+    " let g:netrw_list_hide= netrw_gitignore#Hide() . ',' . '\(^\|\s\s\)\zs\.\S\+'
 endfunction
 
 command! -nargs=1 Bla call BlaFun(<q-args>)
+
 nmap <C-K> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find ~/ -not -path ''*/\.*'' -type d -maxdepth 2', 'sink': 'Bla'}))<cr>
+nmap <C-J> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find . -not -path ''*/\.*'' -type d', 'sink': 'Bla'}))<cr>
+nmap <leader>u :cd ..<CR>:pwd<CR>
+
+nmap <F4> :let @+=expand("%:p")<CR>
 
 command! Conf :e ~/.config/nvim/init.vim
 nmap <C-P> :silent :GFiles<CR>
@@ -179,8 +189,6 @@ map <leader>dab :%bdelete<CR>
 " map <silent> tq :GhcModType<CR>
 " map <silent> te :GhcModTypeClear<CR>
 
-map <F11> :cprev<CR>
-map <F12> :cnext<CR>
 
 
 let g:airline_theme='solarized'
@@ -198,26 +206,32 @@ let g:airline_right_sep=''
 " let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ["flake8"]
 
-"let g:ale_python_mypy_options = "--ignore-missing-imports --strict-optional"
+let g:ale_python_mypy_options = "--ignore-missing-imports --strict-optional"
+let g:ale_haskell_hie_executable = "hie-8.2"
+let g:ale_completion_enabled = 1
 
 let g:ale_linters = {
-    \ 'python': ['flake8', 'mypy']
+    \ 'python': ['flake8', 'mypy'],
+    \ 'haskell': ['hie']
 \ }
 
 set mouse=a
 
-set rtp+=~/.config/nvim/plugged/LanguageClient-neovim
-let g:LanguageClient_serverCommands = { 'haskell': ['hie-8.2'] }
+" set rtp+=~/.config/nvim/plugged/LanguageClient-neovim
+" let g:LanguageClient_serverCommands = { 'haskell': ['hie-8.2'] }
 
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
-map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
-map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
-map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
-map <Leader>lb :call LanguageClient#textDocument_references()<CR>
-map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
-map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
+" map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
+" map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
+" map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
+" map <Leader>lb :call LanguageClient#textDocument_references()<CR>
+" map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
+" map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
 
-autocmd VimEnter * nested :source ~/.session.vim
-autocmd VimLeave * :mksession! ~/.session.vim
+if !empty($MAIN_EDITOR)
+    autocmd VimEnter * nested :source ~/.session.vim
+    autocmd VimLeave * :mksession! ~/.session.vim
+endif
+
