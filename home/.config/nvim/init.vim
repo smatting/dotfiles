@@ -93,7 +93,7 @@ Plug 'dracula/vim'
 " Asynchronous linter
 Plug 'w0rp/ale'
 
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'jlanzarotta/bufexplorer'
 
@@ -144,15 +144,22 @@ set wildignore+=*.png,*.jpg,*.tgz,*.tar,*.gz,.venv
 set wildignore+=*/node_modules/*,*/build/*
 
 
-if (empty($TMUX))
-  if (has("termguicolors"))
-    set termguicolors
-    set background=dark
-    colorscheme dracula
-    hi MatchParen guifg=#ccffff guibg=#444444
-  endif
-endif
+" if (empty($TMUX))
+"   if (has("termguicolors"))
+" 
+"     set termguicolors
+"     set background=dark
+"     colorscheme dracula
+"     hi MatchParen guifg=#ccffff guibg=#444444
+"   endif
+" endif
 
+if (has("termguicolors"))
+  set termguicolors
+  set background=dark
+  colorscheme dracula
+  hi MatchParen guifg=#ccffff guibg=#444444
+endif
 
 " vertical bars
 set fillchars+=vert:\  
