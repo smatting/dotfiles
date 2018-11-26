@@ -12,6 +12,8 @@ call plug#begin()
 " brackets editing and more
 Plug 'tpope/vim-surround'
 
+Plug 'tpope/vim-fugitive'
+
 " ]q [q paired mappings
 Plug 'tpope/vim-unimpaired'
 
@@ -75,8 +77,9 @@ Plug 'muellan/am-colors'
 " Plug 'rbgrouleff/bclose.vim'
 "
 Plug 'vim-scripts/alex.vim'
-Plug 'neovimhaskell/haskell-vim'
 Plug 'andy-morris/happy.vim'
+
+Plug 'neovimhaskell/haskell-vim'
 
 Plug 'LnL7/vim-nix'
 
@@ -116,6 +119,9 @@ set expandtab
 set smarttab
 set nowrap
 set nofoldenable
+
+syntax on
+filetype plugin indent on
 
 set autoread
 au CursorHold,FocusGained,BufEnter * checktime
@@ -177,11 +183,19 @@ nmap <C-H> :nohls<CR>
 nmap - :Ranger<CR>
 nmap _ :RangerWorkingDirectory<CR>
 
+nmap <F8> :ALEToggle<CR>
+
 map <leader>j :%!python -m json.tool<CR>
 " set cd to directory of opened file
 map <leader>cd :cd %:p:h<CR>
 " delete all buffers
 map <leader>dab :%bdelete<CR>
+
+map gu :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
+map gU :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
+map g~ :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
+map <C-a> :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
+map <C-x> :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
 
 " ghc-mod type helpers
 " map <silent> tw :GhcModTypeInsert<CR>
@@ -190,6 +204,7 @@ map <leader>dab :%bdelete<CR>
 " map <silent> te :GhcModTypeClear<CR>
 
 
+map == :Tabularize /^[^=]*\zs=/l1l1<CR>
 
 let g:airline_theme='solarized'
 let g:airline_left_sep=''
@@ -207,12 +222,12 @@ let g:airline_right_sep=''
 " let g:syntastic_python_checkers = ["flake8"]
 
 let g:ale_python_mypy_options = "--ignore-missing-imports --strict-optional"
-let g:ale_haskell_hie_executable = "hie-8.2"
 let g:ale_completion_enabled = 1
+let g:ale_haskell_cabal_ghc_options = "-fno-code -v0 -i./src -i./larala"
 
 let g:ale_linters = {
-    \ 'python': ['flake8', 'mypy'],
-    \ 'haskell': ['hie']
+    \ 'python': ['flake8'],
+    \ 'haskell': ['hlint', 'cabal-ghc']
 \ }
 
 set mouse=a
@@ -221,7 +236,6 @@ set mouse=a
 " let g:LanguageClient_serverCommands = { 'haskell': ['hie-8.2'] }
 
 
-" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
 " map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
 " map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
@@ -234,4 +248,29 @@ if !empty($MAIN_EDITOR)
     autocmd VimEnter * nested :source ~/.session.vim
     autocmd VimLeave * :mksession! ~/.session.vim
 endif
+"
+"
+" Helper function, called below with mappings
+function! HaskellFormat(which) abort
+  if a:which ==# 'hindent' || a:which ==# 'both'
+    :Hindent
+  endif
+  if a:which ==# 'stylish' || a:which ==# 'both'
+    " silent! exe 'undojoin'
+    silent! exe 'keepjumps %!stylish-haskell'
+  endif
+endfunction
+
+" augroup haskellStylish
+"   au!
+"   " Just hindent
+"   " au FileType haskell nnoremap <leader>hi :Hindent<CR>
+"   " Just stylish-haskell
+"   au FileType haskell nnoremap <leader>hs :call HaskellFormat('stylish')<CR>
+"   " First hindent, then stylish-haskell
+"   " au FileType haskell nnoremap <leader>hf :call HaskellFormat('both')<CR>
+" augroup END
+"
+"set guicursor=n:blinkon1
+set guicursor=
 
