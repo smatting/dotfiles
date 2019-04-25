@@ -1,7 +1,8 @@
 {
     allowUnfree = true; 
+    allowBroken = true;
     packageOverrides = pkgs: with pkgs; {
-       myPythonEnv = python36.withPackages (ps: with ps; [
+       myPythonEnv = python37.withPackages (ps: with ps; [
             pylint
             numpy
             scipy
@@ -9,7 +10,7 @@
             docopt
             psycopg2
             pytest
-            Theano
+            # Theano
             regex
             colorama
             pyzmq
@@ -21,13 +22,23 @@
             rethinkdb
             celery
             mypy
+            pandas
+            flake8
+            ipdb
+            pillow
+            imageio
+            scikitimage
+            jupyter
+            pyaml
+            plumbum
        ]);
-
+       
        myHaskellEnv = haskell.packages.ghc822.ghcWithHoogle
                      (haskellPackages: with haskellPackages; [
                        mtl
                        containers
                        diagrams
+
 
                        arrows
                        haskintex
@@ -107,6 +118,79 @@
                        fixed
                        call-stack
 
+                       hpack
+                       megaparsec
+                       regex-pcre
+                       blaze-html
+                       req
+                       # req-oauth2
+                       # oauthenticated
+                       hakyll
+                       ghcid
+                       bloodhound
+
+                       graphmod
+
+
                      ]);
-    };
+
+                     myIHaskell = pkgs.ihaskell.override {
+                       ghcWithPackages = haskell.packages.ghc822.ghcWithPackages;
+                       packages = haskellPackages: with haskellPackages; [
+                       mtl
+                       containers
+                       diagrams
+                       arrows
+                       async
+                       cabal-install
+                       shake
+                       array
+                       base
+                       bytestring
+                       containers
+                       deepseq
+                       directory
+                       filepath
+                       pretty
+                       process
+                       time
+                       transformers
+
+                       attoparsec
+                       HTTP
+                       network
+                       parallel
+                       regex-base
+                       regex-compat
+                       regex-posix
+                       split
+                       stm
+
+                       text
+                       unordered-containers
+                       vector
+                       random
+
+                       scientific
+                       integer-logarithms
+                       hpack
+                       megaparsec
+                       regex-pcre
+                       blaze-html
+                       req
+                       wreq
+                       http-conduit
+                       ihaskell-charts
+                       Chart
+                       diagrams
+                       Chart-diagrams
+
+                       bloodhound
+                       
+                       ];
+                     };
+                     # myIHaskell = haskell.packages.ghc822.ihaskell.override {
+                     #   packages = haskellPackages: with haskellPackages; [lens];
+                     # };
+      };
 }

@@ -88,7 +88,6 @@ alias here="st > /dev/null 2>&1 & disown"
 DISABLE_AUTO_TITLE="true"
 
 alias ls="ls -G --color=auto"
-alias vim="nvim"
 alias ipy="nix-shell --command ipython"
 alias gg='git log --graph --all --oneline'
 alias ns='nix-shell --command zsh'
@@ -107,3 +106,34 @@ if [ -e ~/.nix-profile/bin/ghc ]; then
   export NIX_GHC_DOCDIR="$HOME/.nix-profile/share/doc/ghc/html"
   export NIX_GHC_LIBDIR="$HOME/.nix-profile/lib/ghc-$($NIX_GHC --numeric-version)"
 fi
+
+alias heroku=/home/stefan/node_modules/heroku-cli/bin/run
+alias ns="nix-shell --command zsh"
+
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+alias vim="nvim"
+alias nvim-session="MAIN_EDITOR=1 nvim"
+alias update-askby="ask-update-sources branch askby_py ~/repos/apkgs/sources.json && git add sources.json && ask-commit-sources"
+
+alias jan-lpr="lpr -H 192.168.0.106 -P Brother_DCP-9022CDW"
+alias grab="import png:- | xclip -selection c -t image/png"
+#
+# Get into a shell to run openstack commands
+alias oscsh='docker run -ti --rm -v /home/stefan/.local/share/openstack-cli-data:/data --env-file ${RC_ENV_FILE:-~/.config/osc_rc.env} jmcvea/openstack-client'
+# Make it look like you're running openstack locally
+alias openstack='oscsh openstack'
+
+alias ipython='python -m IPython'
+alias ns='nix-shell --run $SHELL'
+
+
+c() {
+  local dir
+  dir=$(find ${1:-~/} -path '*/\.*' -prune \
+                  -o -type d -maxdepth 5 -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+
+# c() {
+#     cdf ~/
+# }

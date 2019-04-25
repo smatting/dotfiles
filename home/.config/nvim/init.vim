@@ -53,6 +53,7 @@ Plug 'sjl/gundo.vim'
 Plug 'godlygeek/tabular'
 
 Plug 'elmcast/elm-vim'
+let g:elm_format_autosave = 0
 
 " Plug 'vim-syntastic/syntastic'
 " Plug 'eagletmt/ghcmod-vim'
@@ -80,6 +81,8 @@ Plug 'vim-scripts/alex.vim'
 Plug 'andy-morris/happy.vim'
 
 Plug 'neovimhaskell/haskell-vim'
+Plug 'rust-lang/rust.vim'
+
 
 Plug 'LnL7/vim-nix'
 
@@ -89,6 +92,7 @@ Plug 'LnL7/vim-nix'
 "     \ }
 
 Plug 'dracula/vim'
+
 
 " Asynchronous linter
 Plug 'w0rp/ale'
@@ -126,12 +130,15 @@ filetype plugin indent on
 set autoread
 au CursorHold,FocusGained,BufEnter * checktime
 
+
 let g:ranger_map_keys = 0
 
 " autocmd! BufWritePost * Neomake
 
 autocmd BufNewFile,BufRead *.x   set syntax=alex
 au FileType haskell setlocal shiftwidth=2 tabstop=2 
+
+au FileType elm setlocal shiftwidth=2 tabstop=2 
 
 let NERDTreeHijackNetrw=1
 let g:netrw_liststyle=3
@@ -158,6 +165,7 @@ if (has("termguicolors"))
   set termguicolors
   set background=dark
   colorscheme dracula
+  let g:dracula_underline = 0
   hi MatchParen guifg=#ccffff guibg=#444444
 endif
 
@@ -236,6 +244,8 @@ let g:ale_linters = {
     \ 'python': ['flake8'],
     \ 'haskell': ['hlint', 'cabal-ghc']
 \ }
+
+hi ALEWarning guibg=#343746 ctermbg=green cterm=undercurl
 
 set mouse=a
 

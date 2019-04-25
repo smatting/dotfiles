@@ -34,8 +34,9 @@ cpuBar cpuName ref =
   in pollingBarNew cfg 0.5 $ do
     z <- readIORef ref
     [system, user] <- getCPULoad cpuName
-    let z'  = z * 0.9
-        z'' = z' `max` user
+    -- let z'  = z * 0.9
+    --     z'' = z' `max` user
+    let z'' = user + system
     writeIORef ref z''
     return z''
 
@@ -73,7 +74,7 @@ main = do
       wea = weatherNew (defaultWeatherConfig "KMSN") 10
       mpris = mprisNew defaultMPRISConfig
       myweather = commandRunnerNew 300.0 "openweather" [] "no weather Info" "#ffffff"
-      cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
+      -- cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       mem = pollingGraphNew memCfg 1 memCallback
       -- battery = textBatteryNew "$time$" 10
       --battery = commandRunnerNew 10.0 "acpi" [] "?" "#ffffff"
@@ -87,7 +88,8 @@ main = do
   cpu3 <- makeCpuBar "cpu3"
   -- defaultTaffybar defaultTaffybarConfig { startWidgets = [ pager, note ]
   defaultTaffybar defaultTaffybarConfig { startWidgets = [myweather]
-                                        , endWidgets = reverse [ battery, tray, mem, cpu0, cpu1, cpu2, cpu3, clock ]
+                                        -- , endWidgets = reverse [ battery, tray, mem, cpu0, cpu1, cpu2, cpu3, clock ]
+                                        , endWidgets = reverse [ battery, tray, mem, clock ]
                                         , monitorNumber = 1
                                         }
 
