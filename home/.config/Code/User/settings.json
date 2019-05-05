@@ -51,7 +51,7 @@
       "<C-i>": true,
       "<C-o>": true
     },
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "workbench.activityBar.visible": false,
     "window.menuBarVisibility": "toggle",
     "editor.useTabStops": false,
@@ -66,7 +66,8 @@
     // "python.linting.mypyArgs": ["--ignore-missing-imports", " --strict-optional"],
 
     "files.associations": {
-      "*.jinja": "jinja"
+      "*.jinja": "jinja",
+      "*.x" : "haskell"
     },
 
     // Special tags' foreground colors
@@ -85,7 +86,9 @@
       "#bacff2",
       "#2aa198",
     ],
-    "workbench.colorTheme": "Solarized Light",
     "extensions.ignoreRecommendations": true,
+
+    "languageServerHaskell.useCustomHieWrapper": true,
+    "languageServerHaskell.useCustomHieWrapperPath": "/home/stefan/repos/askby_curry/hie.sh",
 
   }

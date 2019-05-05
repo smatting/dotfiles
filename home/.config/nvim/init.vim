@@ -12,6 +12,8 @@ call plug#begin()
 " brackets editing and more
 Plug 'tpope/vim-surround'
 
+Plug 'tpope/vim-fugitive'
+
 " ]q [q paired mappings
 Plug 'tpope/vim-unimpaired'
 
@@ -34,12 +36,12 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'nvie/vim-flake8'
 
 " :Ranger - start the ranger file commander
-Plug 'francoiscabrol/ranger.vim'
+" Plug 'francoiscabrol/ranger.vim'
 
-" Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-vinegar'
 
 " So that bufffers opened by ranger get closed
-Plug 'rbgrouleff/bclose.vim'
+"Plug 'rbgrouleff/bclose.vim'
 
 " <C-N> - multiple cursor; great for renaming
 Plug 'terryma/vim-multiple-cursors'
@@ -51,6 +53,7 @@ Plug 'sjl/gundo.vim'
 Plug 'godlygeek/tabular'
 
 Plug 'elmcast/elm-vim'
+let g:elm_format_autosave = 0
 
 " Plug 'vim-syntastic/syntastic'
 " Plug 'eagletmt/ghcmod-vim'
@@ -75,8 +78,11 @@ Plug 'muellan/am-colors'
 " Plug 'rbgrouleff/bclose.vim'
 "
 Plug 'vim-scripts/alex.vim'
-Plug 'neovimhaskell/haskell-vim'
 Plug 'andy-morris/happy.vim'
+
+Plug 'neovimhaskell/haskell-vim'
+Plug 'rust-lang/rust.vim'
+
 
 Plug 'LnL7/vim-nix'
 
@@ -86,6 +92,7 @@ Plug 'LnL7/vim-nix'
 "     \ }
 
 Plug 'dracula/vim'
+
 
 " Asynchronous linter
 Plug 'w0rp/ale'
@@ -117,8 +124,12 @@ set smarttab
 set nowrap
 set nofoldenable
 
+syntax on
+filetype plugin indent on
+
 set autoread
 au CursorHold,FocusGained,BufEnter * checktime
+
 
 let g:ranger_map_keys = 0
 
@@ -126,6 +137,8 @@ let g:ranger_map_keys = 0
 
 autocmd BufNewFile,BufRead *.x   set syntax=alex
 au FileType haskell setlocal shiftwidth=2 tabstop=2 
+
+au FileType elm setlocal shiftwidth=2 tabstop=2 
 
 let NERDTreeHijackNetrw=1
 let g:netrw_liststyle=3
@@ -152,6 +165,7 @@ if (has("termguicolors"))
   set termguicolors
   set background=dark
   colorscheme dracula
+  let g:dracula_underline = 0
   hi MatchParen guifg=#ccffff guibg=#444444
 endif
 
@@ -172,6 +186,23 @@ nmap <C-K> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find ~/ -not -
 nmap <C-J> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find . -not -path ''*/\.*'' -type d', 'sink': 'Bla'}))<cr>
 nmap <leader>u :cd ..<CR>:pwd<CR>
 
+nmap _ :e ./<CR>
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
 nmap <F4> :let @+=expand("%:p")<CR>
 
 command! Conf :e ~/.config/nvim/init.vim
@@ -181,14 +212,22 @@ nmap <C-B> :silent :Buffers<CR>
 nmap <C-S> :write<CR>
 nmap <C-H> :nohls<CR>
 
-nmap - :Ranger<CR>
-nmap _ :RangerWorkingDirectory<CR>
+" nmap - :Ranger<CR>
+" nmap _ :RangerWorkingDirectory<CR>
+
+nmap <F8> :ALEToggle<CR>
 
 map <leader>j :%!python -m json.tool<CR>
 " set cd to directory of opened file
 map <leader>cd :cd %:p:h<CR>
 " delete all buffers
 map <leader>dab :%bdelete<CR>
+
+map gu :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
+map gU :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
+map g~ :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
+map <C-a> :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
+map <C-x> :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
 
 " ghc-mod type helpers
 " map <silent> tw :GhcModTypeInsert<CR>
@@ -197,6 +236,7 @@ map <leader>dab :%bdelete<CR>
 " map <silent> te :GhcModTypeClear<CR>
 
 
+map == :Tabularize /^[^=]*\zs=/l1l1<CR>
 
 let g:airline_theme='solarized'
 let g:airline_left_sep=''
@@ -214,13 +254,15 @@ let g:airline_right_sep=''
 " let g:syntastic_python_checkers = ["flake8"]
 
 let g:ale_python_mypy_options = "--ignore-missing-imports --strict-optional"
-let g:ale_haskell_hie_executable = "hie-8.2"
 let g:ale_completion_enabled = 1
+let g:ale_haskell_cabal_ghc_options = "-fno-code -v0 -i./src -i./larala"
 
 let g:ale_linters = {
-    \ 'python': ['flake8', 'mypy'],
-    \ 'haskell': ['hie']
+    \ 'python': ['flake8'],
+    \ 'haskell': ['hlint', 'cabal-ghc']
 \ }
+
+hi ALEWarning guibg=#343746 ctermbg=green cterm=undercurl
 
 set mouse=a
 
@@ -228,7 +270,6 @@ set mouse=a
 " let g:LanguageClient_serverCommands = { 'haskell': ['hie-8.2'] }
 
 
-" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
 " map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
 " map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
@@ -241,4 +282,37 @@ if !empty($MAIN_EDITOR)
     autocmd VimEnter * nested :source ~/.session.vim
     autocmd VimLeave * :mksession! ~/.session.vim
 endif
+"
+"
+" Helper function, called below with mappings
+function! HaskellFormat(which) abort
+  if a:which ==# 'hindent' || a:which ==# 'both'
+    :Hindent
+  endif
+  if a:which ==# 'stylish' || a:which ==# 'both'
+    " silent! exe 'undojoin'
+    silent! exe 'keepjumps %!stylish-haskell'
+  endif
+endfunction
 
+" augroup haskellStylish
+"   au!
+"   " Just hindent
+"   " au FileType haskell nnoremap <leader>hi :Hindent<CR>
+"   " Just stylish-haskell
+"   au FileType haskell nnoremap <leader>hs :call HaskellFormat('stylish')<CR>
+"   " First hindent, then stylish-haskell
+"   " au FileType haskell nnoremap <leader>hf :call HaskellFormat('both')<CR>
+" augroup END
+"
+"set guicursor=n:blinkon1
+set guicursor=
+
+autocmd FileType netrw setl bufhidden=wipe
+
+" let g:LanguageClient_serverCommands = { 'haskell': ['nix-shell', '--run', 'hie'] }
+" let g:LanguageClient_rootMarkers = ['*.cabal']
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" map <silent> K :call LanguageClient#textDocument_documentSymbol()<CR>
