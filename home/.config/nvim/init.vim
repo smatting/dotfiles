@@ -36,12 +36,12 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'nvie/vim-flake8'
 
 " :Ranger - start the ranger file commander
-Plug 'francoiscabrol/ranger.vim'
+" Plug 'francoiscabrol/ranger.vim'
 
-" Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-vinegar'
 
 " So that bufffers opened by ranger get closed
-Plug 'rbgrouleff/bclose.vim'
+"Plug 'rbgrouleff/bclose.vim'
 
 " <C-N> - multiple cursor; great for renaming
 Plug 'terryma/vim-multiple-cursors'
@@ -186,6 +186,23 @@ nmap <C-K> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find ~/ -not -
 nmap <C-J> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find . -not -path ''*/\.*'' -type d', 'sink': 'Bla'}))<cr>
 nmap <leader>u :cd ..<CR>:pwd<CR>
 
+nmap _ :e ./<CR>
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
 nmap <F4> :let @+=expand("%:p")<CR>
 
 command! Conf :e ~/.config/nvim/init.vim
@@ -195,8 +212,8 @@ nmap <C-B> :silent :Buffers<CR>
 nmap <C-S> :write<CR>
 nmap <C-H> :nohls<CR>
 
-nmap - :Ranger<CR>
-nmap _ :RangerWorkingDirectory<CR>
+" nmap - :Ranger<CR>
+" nmap _ :RangerWorkingDirectory<CR>
 
 nmap <F8> :ALEToggle<CR>
 
@@ -291,3 +308,11 @@ endfunction
 "set guicursor=n:blinkon1
 set guicursor=
 
+autocmd FileType netrw setl bufhidden=wipe
+
+" let g:LanguageClient_serverCommands = { 'haskell': ['nix-shell', '--run', 'hie'] }
+" let g:LanguageClient_rootMarkers = ['*.cabal']
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" map <silent> K :call LanguageClient#textDocument_documentSymbol()<CR>

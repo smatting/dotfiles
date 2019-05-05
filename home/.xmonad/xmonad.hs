@@ -31,7 +31,9 @@ import qualified Data.Map        as M
 -- certain contrib modules.
 --
 -- myTerminal      = "terminator"
-myTerminal      = "konsole --hide-menubar --hide-tabbar"
+-- myTerminal      = "konsole --hide-menubar --hide-tabbar"
+myTerminal      = "kitty"
+
 
 
 -- Whether focus follows the mouse pointer.

@@ -107,7 +107,7 @@ if [ -e ~/.nix-profile/bin/ghc ]; then
   export NIX_GHC_LIBDIR="$HOME/.nix-profile/lib/ghc-$($NIX_GHC --numeric-version)"
 fi
 
-alias heroku=/home/stefan/node_modules/heroku-cli/bin/run
+#alias heroku=/home/stefan/node_modules/heroku-cli/bin/run
 alias ns="nix-shell --command zsh"
 
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
@@ -133,6 +133,8 @@ c() {
                   -o -type d -maxdepth 5 -print 2> /dev/null | fzf +m) &&
   cd "$dir"
 }
+
+export TERM=xterm
 
 # c() {
 #     cdf ~/
