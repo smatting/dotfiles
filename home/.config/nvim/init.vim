@@ -69,7 +69,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'rakr/vim-one'
 Plug 'zanglg/nova.vim'
 Plug 'muellan/am-colors'
-" Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Plug 'neomake/neomake'
@@ -182,8 +182,8 @@ endfunction
 
 command! -nargs=1 Bla call BlaFun(<q-args>)
 
-nmap <C-K> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find ~/ -not -path ''*/\.*'' -type d -maxdepth 2', 'sink': 'Bla'}))<cr>
-nmap <C-J> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find . -not -path ''*/\.*'' -type d', 'sink': 'Bla'}))<cr>
+nmap <C-K> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find ~/ -not -path ''*/\.*'' -type d -maxdepth 2', 'sink': 'Bla'}))<CR><C-I>
+nmap <C-J> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find . -not -path ''*/\.*'' -type d', 'sink': 'Bla'}))<CR><C-I>
 nmap <leader>u :cd ..<CR>:pwd<CR>
 
 nmap _ :e ./<CR>
