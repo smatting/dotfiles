@@ -1,7 +1,12 @@
 # Path to your oh-my-zsh configuration.
-export ZSH=/nix/store/f35gv4zwr4z873msdzsvi7n81f33lrc5-oh-my-zsh-2018-04-25/share/oh-my-zsh
+# export ZSH=/nix/store/f35gv4zwr4z873msdzsvi7n81f33lrc5-oh-my-zsh-2018-04-25/share/oh-my-zsh
 # ZSH=$HOME/.oh-my-zsh
 
+if [[ -f $HOME/.profile ]]; then
+    source $HOME/.profile
+fi
+
+export ZSH=$OH_MY_ZSH
 
 
 # Set name of the theme to load.
@@ -69,10 +74,6 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=" %{$reset_color%}"
 # zle -N zle-line-init
 
 bindkey '^f' vi-end-of-line
-
-if [[ -f $HOME/.profile ]]; then
-    source $HOME/.profile
-fi
 
 # eval $(dircolors ~/.dircolors)
 
