@@ -183,6 +183,9 @@ endfunction
 command! -nargs=1 Bla call BlaFun(<q-args>)
 
 nmap <C-K> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find ~/ -not -path ''*/\.*'' -type d -maxdepth 2', 'sink': 'Bla'}))<CR><C-I>
+
+nmap <C-I> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find $PWD -not -path ''*/\.*'' -type d -maxdepth 10', 'sink': 'Bla'}))<CR><C-I>
+
 nmap <C-J> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find . -not -path ''*/\.*'' -type d', 'sink': 'Bla'}))<CR><C-I>
 nmap <leader>u :cd ..<CR>:pwd<CR>
 
@@ -238,7 +241,11 @@ map <C-x> :echo "Nothing happens. I prevented a potentially unintented function 
 
 map == :Tabularize /^[^=]*\zs=/l1l1<CR>
 
-let g:airline_theme='solarized'
+" let g:airline_theme='solarized'
+" let g:airline_extensions = []
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline_left_sep=''
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
@@ -259,7 +266,7 @@ let g:ale_haskell_cabal_ghc_options = "-fno-code -v0 -i./src -i./larala"
 
 let g:ale_linters = {
     \ 'python': ['flake8'],
-    \ 'haskell': ['hlint', 'cabal-ghc']
+    \ 'haskell': ['hlint']
 \ }
 
 hi ALEWarning guibg=#343746 ctermbg=green cterm=undercurl
@@ -316,3 +323,10 @@ autocmd FileType netrw setl bufhidden=wipe
 " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " map <silent> K :call LanguageClient#textDocument_documentSymbol()<CR>
+
+autocmd FileType elm setl sw=2
+
+augroup tags
+au BufWritePost *.hs            silent !init-tags %
+au BufWritePost *.hsc           silent !init-tags %
+augroup END
