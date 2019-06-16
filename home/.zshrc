@@ -6,6 +6,7 @@ if [[ -f $HOME/.profile ]]; then
     source $HOME/.profile
 fi
 
+export ZSH_THEME=""
 export ZSH=$OH_MY_ZSH
 
 
@@ -50,7 +51,10 @@ source $ZSH/oh-my-zsh.sh
 
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 
-PROMPT='%{$fg[gray]%}%m [$IN_NIX_SHELL] %{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}λ%{$reset_color%} '
+
+
+PROMPT='🚀 %{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}'$'\n''λ%{$reset_color%} '
+#PROMPT='%m [$IN_NIX_SHELL] %{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}λ '
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX=" %{$reset_color%}"
 
@@ -138,6 +142,12 @@ c() {
 }
 
 export TERM=xterm
+
+export PATH=~/.bin:$PATH
+
+export PRINTER=Drucker2
+
+# export LC_CTYPE=en_US.UTF-8
 
 # c() {
 #     cdf ~/
