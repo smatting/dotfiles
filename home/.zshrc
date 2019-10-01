@@ -96,7 +96,7 @@ DISABLE_AUTO_TITLE="true"
 
 alias ls="ls -G --color=auto"
 alias ipy="nix-shell --command ipython"
-alias gg='git log --graph --all --oneline'
+alias gg='git log --graph --oneline --date-order'
 alias ns='nix-shell --command zsh'
 
 eval `dircolors ~/.dircolors`
@@ -152,3 +152,5 @@ export PRINTER=Drucker2
 # c() {
 #     cdf ~/
 # }
+alias av='aws-vault --backend file'
+source $(fzf-share)/key-bindings.zsh
