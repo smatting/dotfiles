@@ -15,7 +15,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
 import XMonad.Actions.NoBorders (toggleBorder)
-import System.Taffybar.Hooks.PagerHints (pagerHints)
+-- import System.Taffybar.Hooks.PagerHints (pagerHints)
 import XMonad.Layout.Fullscreen (fullscreenSupport)
 
 import Brightness
