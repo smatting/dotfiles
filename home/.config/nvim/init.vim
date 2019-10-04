@@ -113,7 +113,8 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'prabirshrestha/async.vim'
 " Plug 'prabirshrestha/vim-lsp'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 
 Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 
@@ -287,6 +288,8 @@ let g:ale_linters = {
 
 hi ALEWarning guibg=#343746 ctermbg=green cterm=undercurl
 
+nmap <silent> [l :ALEDetail<CR>
+
 set mouse=a
 
 " set rtp+=~/.config/nvim/plugged/LanguageClient-neovim
@@ -407,6 +410,7 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
+
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -425,7 +429,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
