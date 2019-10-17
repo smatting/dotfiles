@@ -116,7 +116,10 @@ Plug 'sheerun/vim-polyglot'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 
-Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
+" Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
+
+" Plug 'plasticboy/vim-markdown'
+" Plug 'gabrielelana/vim-markdown'
 
 "
 call plug#end()
@@ -203,6 +206,8 @@ nmap <C-I> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find $PWD -not
 
 nmap <C-J> :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find . -not -path ''*/\.*'' -type d', 'sink': 'Bla'}))<CR><C-I>
 nmap <leader>u :cd ..<CR>:pwd<CR>
+
+nmap <leader>nn :silent :call fzf#run(fzf#wrap('my-stuff', {'source': 'find $NOTES -not -path ''*/\.*'' -type f -maxdepth 10', 'sink': 'e'}))<CR><C-I>
 
 nmap _ :e ./<CR>
 
@@ -437,3 +442,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " Remap for format selected region
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+nmap <leader>ra  :%!ormolu<CR>
+nmap <leader>rp  vip:'<,'>!ormolu<CR>
+vmap <leader>r  :'<,'>!ormolu<CR>
