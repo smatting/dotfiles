@@ -285,6 +285,7 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
+main :: IO ()
 main
   = xmonad
   $ fullscreenSupport

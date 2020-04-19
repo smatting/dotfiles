@@ -74,6 +74,9 @@ main = do
       wea = weatherNew (defaultWeatherConfig "KMSN") 10
       mpris = mprisNew defaultMPRISConfig
       myweather = commandRunnerNew 300.0 "openweather" [] "no weather Info" "#ffffff"
+      utcTime = commandRunnerNew 60.0 "/bin/sh" ["-c","d=$(date --utc \"+%Y-%m-%d %H:%M:%S UTC\"); echo -n $d"] "no weather Info" "#ffffff"
+
+
 
       myip = commandRunnerNew 60.0 "/home/stefan/.bin/myip" [] "no ip info" "#ffffff"
       -- cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
@@ -89,7 +92,7 @@ main = do
   cpu2 <- makeCpuBar "cpu2"
   cpu3 <- makeCpuBar "cpu3"
   -- defaultTaffybar defaultTaffybarConfig { startWidgets = [ pager, note ]
-  defaultTaffybar defaultTaffybarConfig { startWidgets = [myweather, myip]
+  defaultTaffybar defaultTaffybarConfig { startWidgets = [myweather, myip, utcTime]
                                         -- , endWidgets = reverse [ battery, tray, mem, cpu0, cpu1, cpu2, cpu3, clock ]
                                         , endWidgets = reverse [ battery, tray, mem, clock ]
                                         , monitorNumber = 1
