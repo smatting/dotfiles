@@ -9,6 +9,7 @@
 
 import XMonad
 import Data.Monoid
+import Data.Foldable
 import System.Exit
 
 import XMonad.Hooks.ManageDocks
@@ -17,6 +18,7 @@ import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
 import XMonad.Actions.NoBorders (toggleBorder)
 -- import System.Taffybar.Hooks.PagerHints (pagerHints)
 import XMonad.Layout.Fullscreen (fullscreenSupport)
+import qualified XMonad.StackSet as SSet
 
 import Brightness
 
@@ -42,7 +44,7 @@ myFocusFollowsMouse = False
 
 -- Whether clicking on a window to focus also passes the click to the window
 myClickJustFocuses :: Bool
-myClickJustFocuses = False
+myClickJustFocuses = True
 
 -- Width of the window border in pixels.
 --
@@ -80,6 +82,20 @@ myAdditionalKeys = [
     , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@  -1.5%")
     , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
     ]
+
+
+applyAllWindows :: (Window -> WindowSet -> WindowSet) -> X()
+applyAllWindows fz =
+  windows $ \set ->
+    (foldr (.) id (fz <$> SSet.allWindows set)) set
+
+
+sinkAllWindows =
+  applyAllWindows W.sink
+
+resetAllLayouts conf =
+  for_ myWorkspaces $ \workspaceId ->
+    updateLayout workspaceId (Just (XMonad.layoutHook conf))
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -159,8 +175,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
-    -- Run xmessage with a summary of the default keybindings (useful for beginners)
-    , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+    -- HALP! Cannot find a window? Reset all layouts!
+    , ((modm .|. shiftMask, xK_h     ), sinkAllWindows >> resetAllLayouts conf)
+
     ]
     ++
 
@@ -321,6 +338,3 @@ defaults = def {
         startupHook        = myStartupHook
     }
 
--- | Finally, a copy of the default bindings in simple textual tabular format.
-help :: String
-help = ""

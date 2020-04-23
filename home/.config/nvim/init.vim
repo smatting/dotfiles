@@ -8,6 +8,9 @@
 " 
 " if terminal is too small <C-K> will not execute immediaetely
 "
+
+let g:ale_set_balloons = 1
+
 call plug#begin()
 " brackets editing and more
 Plug 'tpope/vim-surround'
@@ -110,8 +113,8 @@ Plug 'exu/pgsql.vim'
 
 Plug 'sheerun/vim-polyglot'
 
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
 
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
@@ -127,7 +130,8 @@ Plug 'gabrielelana/vim-markdown'
 
 Plug 'sbdchd/neoformat'
 
-" Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lsp'
+Plug 'haorenW1025/diagnostic-nvim'
 
 "
 call plug#end()
@@ -279,15 +283,19 @@ let g:airline_section_z = airline#section#create(['%3v'])
 " let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ["flake8"]
 
+    " \ 'haskell': ['hlint', 'hie'],
+    " \ 'purescript': []
 
 let g:ale_linters = {
     \ 'python': ['flake8'],
-    \ 'haskell': ['hlint'],
-    \ 'purescript': []
+    \ 'haskell': [],
 \ }
 hi ALEWarning guibg=#343746 ctermbg=green cterm=undercurl
-nmap <F8> :ALEToggle<CR>
+" nmap <F8> :ALEToggle<CR>
 nmap <silent> <leader>e :ALEDetail<CR>
+let g:ale_cursor_detail = 0
+
+" let g:ale_haskell_hie_executable = "/home/stefan/.nix-profile/bin/ghcide"
 
 
 set mouse=a
@@ -368,49 +376,57 @@ let g:neoformat_enabled_purescript = ['mypurty']
 " See code here:
 " https://github.com/neovim/neovim/blob/master/runtime/lua/vim/lsp.lua
 
-" function! LoadGHCIDE()
-" lua << EOF
-" require'nvim_lsp'.ghcide.setup{}
-" EOF
-" endfunction
-" call LoadGHCIDE()
+function! LoadGHCIDE()
+lua << EOF
+require'nvim_lsp'.ghcide.setup{}
+EOF
+endfunction
+call LoadGHCIDE()
+" require'nvim_lsp'.purescriptls.setup{}
 
-" function! LSPStop()
-" lua << EOF
-" local lsp = require('vim.lsp')
-" lsp.stop_client(lsp.get_active_clients())
-" EOF
-" endfunction
+function! LSPStop()
+lua << EOF
+local lsp = require('vim.lsp')
+lsp.stop_client(lsp.get_active_clients())
+EOF
+endfunction
 
-" nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 
+let g:diagnostic_enable_virtual_text = 0
+lua require'nvim_lsp'.ghcide.setup{on_attach=require'diagnostic'.on_attach}
 
-au User lsp_setup call lsp#register_server({
-    \ 'name': 'ghcide',
-    \ 'cmd': {server_info->['ghcide', '--lsp']},
-    \ 'whitelist': ['haskell'],
-    \ })
+nmap <F8> :NextDiagnostic<CR>
+nmap <F7> :PrevDiagnostic<CR>
 
-au User lsp_setup call lsp#register_server({
-    \ 'name': 'purescript',
-    \ 'cmd': {server_info->['purescript-language-server', '--stdio']},
-    \ 'whitelist': ['purescript'],
-    \ })
+" - vim-lsp (howere this feels sluggish ) ----------------------------------------
 
-let g:lsp_diagnostics_float_cursor = 1
-let g:lsp_diagnostics_echo_delay = 20
-let g:lsp_diagnostics_float_delay = 20
-let g:lsp_text_document_did_save_delay = -1
-let g:lsp_diagnostics_echo_cursor = 0
-let g:lsp_signs_enabled = 1
-let g:lsp_virtual_text_enabled = 0
+" au User lsp_setup call lsp#register_server({
+"     \ 'name': 'ghcide',
+"     \ 'cmd': {server_info->['ghcide', '--lsp']},
+"     \ 'whitelist': ['haskell'],
+"     \ })
 
-highlight LspErrorHighlight term=underline cterm=underline gui=underline
-highlight LspErrorText guifg=#f8f8f2 guibg=#ff6e67 gui=NONE
-highlight LspWarningHighlight term=underline cterm=underline gui=underline
-highlight LspWarningText guifg=#f8f8f2 guibg=#727808 gui=NONE
-highlight Pmenu ctermbg=gray guibg=#36394a
+" au User lsp_setup call lsp#register_server({
+"     \ 'name': 'purescript',
+"     \ 'cmd': {server_info->['purescript-language-server', '--stdio']},
+"     \ 'whitelist': ['purescript'],
+"     \ })
 
-nnoremap <silent> K <cmd>LspHover()<CR>
+" let g:lsp_diagnostics_float_cursor = 1
+" let g:lsp_diagnostics_echo_delay = 20
+" let g:lsp_diagnostics_float_delay = 20
+" let g:lsp_text_document_did_save_delay = -1
+" let g:lsp_diagnostics_echo_cursor = 0
+" let g:lsp_signs_enabled = 1
+" let g:lsp_virtual_text_enabled = 0
 
-set updatetime=250
+" highlight LspErrorHighlight term=underline cterm=underline gui=underline
+" highlight LspErrorText guifg=#f8f8f2 guibg=#ff6e67 gui=NONE
+" highlight LspWarningHighlight term=underline cterm=underline gui=underline
+" highlight LspWarningText guifg=#f8f8f2 guibg=#727808 gui=NONE
+" highlight Pmenu ctermbg=gray guibg=#36394a
+
+" nnoremap <silent> K <cmd>LspHover()<CR>
+
+" --------------------------------------------------------------------------------
