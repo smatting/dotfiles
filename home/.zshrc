@@ -154,3 +154,4 @@ export PRINTER=Drucker2
 # }
 alias av='aws-vault --backend file'
 source $(fzf-share)/key-bindings.zsh
+eval "$(direnv hook zsh)"
