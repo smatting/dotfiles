@@ -8,6 +8,9 @@
 " 
 " if terminal is too small <C-K> will not execute immediaetely
 "
+
+let g:ale_set_balloons = 1
+
 call plug#begin()
 " brackets editing and more
 Plug 'tpope/vim-surround'
@@ -95,7 +98,7 @@ Plug 'LnL7/vim-nix'
 Plug 'dracula/vim'
 
 
-" Asynchronous linter
+"" Asynchronous linter
 Plug 'w0rp/ale'
 
 " Plug 'ludovicchabant/vim-gutentags'
@@ -114,12 +117,21 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'prabirshrestha/vim-lsp'
 
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+
+Plug 'airblade/vim-gitgutter'
+
+Plug 'jparise/vim-graphql'
 
 " Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 
-" Plug 'plasticboy/vim-markdown'
-" Plug 'gabrielelana/vim-markdown'
+Plug 'plasticboy/vim-markdown'
+Plug 'gabrielelana/vim-markdown'
+
+Plug 'sbdchd/neoformat'
+
+Plug 'neovim/nvim-lsp'
+Plug 'haorenW1025/diagnostic-nvim'
 
 "
 call plug#end()
@@ -146,7 +158,7 @@ syntax on
 filetype plugin indent on
 
 set autoread
-au CursorHold,FocusGained,BufEnter * checktime
+" au CursorHold,FocusGained,BufEnter * checktime
 
 
 let g:ranger_map_keys = 0
@@ -154,7 +166,8 @@ let g:ranger_map_keys = 0
 " autocmd! BufWritePost * Neomake
 
 autocmd BufNewFile,BufRead *.x   set syntax=alex
-au FileType haskell setlocal shiftwidth=2 tabstop=2 
+
+
 
 au FileType elm setlocal shiftwidth=2 tabstop=2 
 
@@ -164,20 +177,10 @@ let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 
 let g:deoplete#enable_at_startup = 1
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,.git,*.pkl,__pycache__
+set wildignore+=*.so,*.swp,*.zip,.git,*.pkl,__pycache__
 set wildignore+=*.png,*.jpg,*.tgz,*.tar,*.gz,.venv
 set wildignore+=*/node_modules/*,*/build/*
 
-
-" if (empty($TMUX))
-"   if (has("termguicolors"))
-" 
-"     set termguicolors
-"     set background=dark
-"     colorscheme dracula
-"     hi MatchParen guifg=#ccffff guibg=#444444
-"   endif
-" endif
 
 if (has("termguicolors"))
   set termguicolors
@@ -188,9 +191,9 @@ if (has("termguicolors"))
 endif
 
 " vertical bars
-set fillchars+=vert:\  
-hi VertSplit ctermbg=NONE guibg=#444444
-set foldcolumn=1
+" set fillchars+=vert:\
+" hi VertSplit ctermbg=NONE guibg=#444444
+" set foldcolumn=1
 
 function! BlaFun(dir)
     exe "lcd! " a:dir
@@ -238,13 +241,11 @@ nmap <C-H> :nohls<CR>
 " nmap - :Ranger<CR>
 " nmap _ :RangerWorkingDirectory<CR>
 
-nmap <F8> :ALEToggle<CR>
 
 map <leader>j :%!python -m json.tool<CR>
+
 " set cd to directory of opened file
 map <leader>cd :cd %:p:h<CR>
-" delete all buffers
-map <leader>dab :%bdelete<CR>
 
 map gu :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
 map gU :echo "Nothing happens. I prevented a potentially unintented function for you."<CR>
@@ -282,59 +283,28 @@ let g:airline_section_z = airline#section#create(['%3v'])
 " let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ["flake8"]
 
-let g:ale_python_mypy_options = "--ignore-missing-imports --strict-optional"
-let g:ale_completion_enabled = 1
-let g:ale_haskell_cabal_ghc_options = "-fno-code -v0 -i./src -i./larala"
+    " \ 'haskell': ['hlint', 'hie'],
+    " \ 'purescript': []
 
 let g:ale_linters = {
     \ 'python': ['flake8'],
-    \ 'haskell': ['hlint']
+    \ 'haskell': [],
 \ }
-
 hi ALEWarning guibg=#343746 ctermbg=green cterm=undercurl
+" nmap <F8> :ALEToggle<CR>
+nmap <silent> <leader>e :ALEDetail<CR>
+let g:ale_cursor_detail = 0
 
-nmap <silent> [l :ALEDetail<CR>
+" let g:ale_haskell_hie_executable = "/home/stefan/.nix-profile/bin/ghcide"
+
 
 set mouse=a
 
-" set rtp+=~/.config/nvim/plugged/LanguageClient-neovim
-" let g:LanguageClient_serverCommands = { 'haskell': ['hie-8.2'] }
 
-
-" map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
-" map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
-" map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
-" map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
-" map <Leader>lb :call LanguageClient#textDocument_references()<CR>
-" map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
-" map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
-
-if !empty($MAIN_EDITOR)
-    autocmd VimEnter * nested :source ~/.session.vim
-    autocmd VimLeave * :mksession! ~/.session.vim
-endif
-"
-"
-" Helper function, called below with mappings
-function! HaskellFormat(which) abort
-  if a:which ==# 'hindent' || a:which ==# 'both'
-    :Hindent
-  endif
-  if a:which ==# 'stylish' || a:which ==# 'both'
-    " silent! exe 'undojoin'
-    silent! exe 'keepjumps %!stylish-haskell'
-  endif
-endfunction
-
-" augroup haskellStylish
-"   au!
-"   " Just hindent
-"   " au FileType haskell nnoremap <leader>hi :Hindent<CR>
-"   " Just stylish-haskell
-"   au FileType haskell nnoremap <leader>hs :call HaskellFormat('stylish')<CR>
-"   " First hindent, then stylish-haskell
-"   " au FileType haskell nnoremap <leader>hf :call HaskellFormat('both')<CR>
-" augroup END
+" if !empty($MAIN_EDITOR)
+"     autocmd VimEnter * nested :source ~/.session.vim
+"     autocmd VimLeave * :mksession! ~/.session.vim
+" endif
 "
 "set guicursor=n:blinkon1
 set guicursor=
@@ -343,87 +313,24 @@ autocmd FileType netrw setl bufhidden=wipe
 
 
 
+
 autocmd FileType elm setl sw=2
+
+" Haskell
+" -------
+
+let g:sql_type_default = 'pgsql'
+
+au FileType haskell setlocal shiftwidth=2 tabstop=2 
+let g:neoformat_enabled_haskell = ['ormolu']
 
 augroup tags
 au BufWritePost *.hs            silent !init-tags %
 au BufWritePost *.hsc           silent !init-tags %
 augroup END
 
-let g:sql_type_default = 'pgsql'
 
-
-"
-
-" au User lsp_setup call lsp#register_server({
-"     \ 'name': 'hie-core',
-"     \ 'cmd': {server_info->['/home/stefan/.bin/hie-core-wrapper.sh', '--lsp']},
-"     \ 'whitelist': ['haskell'],
-"     \ })
-
-" let g:lsp_diagnostics_echo_cursor = 1
-let g:ghcid_command = "/home/stefan/.bin/ghcid-nix-shell"
-
-" nnoremap <silent> <F5> :LspHover<CR>
-" nnoremap <silent> <F6> :LspDefinition<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" coc.vim haskell configuration """""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" https://github.com/digital-asset/daml/issues/2801
-
-" if hidden is not set, TextEdit might fail.
-set hidden
-
-" Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
-
-" Better display for messages
-set cmdheight=2
-
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-
-" always show signcolumns
-set signcolumn=yes
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" -------
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -433,16 +340,93 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
+nmap <leader>fa :Neoformat<CR>
+vmap <leader>f  :'<,'>Neoformat<CR>
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" disable ex-mode
+nnoremap Q <Nop>
 
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" trailing whitespace in red
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
-nmap <leader>ra  :%!ormolu<CR>
-nmap <leader>rp  vip:'<,'>!ormolu<CR>
-vmap <leader>r  :'<,'>!ormolu<CR>
+" purescript
+let purescript_indent_if = 2
+let purescript_indent_case = 2
+let purescript_indent_let = 2
+let purescript_indent_where = 2
+let purescript_indent_do = 2
+let purescript_indent_in = 2
+au FileType purescript setlocal shiftwidth=2 tabstop=2 
+
+let g:neoformat_purescript_mypurty = {
+        \ 'exe': '/home/stefan/.npm-global-stefan/bin/purty',
+        \ 'args': ['-'],
+        \ 'stdin': 1
+        \ }
+let g:neoformat_enabled_purescript = ['mypurty']
+
+" LSP Config
+" ----------
+
+" See code here:
+" https://github.com/neovim/neovim/blob/master/runtime/lua/vim/lsp.lua
+
+function! LoadGHCIDE()
+lua << EOF
+require'nvim_lsp'.ghcide.setup{}
+EOF
+endfunction
+call LoadGHCIDE()
+" require'nvim_lsp'.purescriptls.setup{}
+
+function! LSPStop()
+lua << EOF
+local lsp = require('vim.lsp')
+lsp.stop_client(lsp.get_active_clients())
+EOF
+endfunction
+
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+
+let g:diagnostic_enable_virtual_text = 0
+lua require'nvim_lsp'.ghcide.setup{on_attach=require'diagnostic'.on_attach}
+
+nmap <F8> :NextDiagnostic<CR>
+nmap <F7> :PrevDiagnostic<CR>
+
+" - vim-lsp (howere this feels sluggish ) ----------------------------------------
+
+" au User lsp_setup call lsp#register_server({
+"     \ 'name': 'ghcide',
+"     \ 'cmd': {server_info->['ghcide', '--lsp']},
+"     \ 'whitelist': ['haskell'],
+"     \ })
+
+" au User lsp_setup call lsp#register_server({
+"     \ 'name': 'purescript',
+"     \ 'cmd': {server_info->['purescript-language-server', '--stdio']},
+"     \ 'whitelist': ['purescript'],
+"     \ })
+
+" let g:lsp_diagnostics_float_cursor = 1
+" let g:lsp_diagnostics_echo_delay = 20
+" let g:lsp_diagnostics_float_delay = 20
+" let g:lsp_text_document_did_save_delay = -1
+" let g:lsp_diagnostics_echo_cursor = 0
+" let g:lsp_signs_enabled = 1
+" let g:lsp_virtual_text_enabled = 0
+
+" highlight LspErrorHighlight term=underline cterm=underline gui=underline
+" highlight LspErrorText guifg=#f8f8f2 guibg=#ff6e67 gui=NONE
+" highlight LspWarningHighlight term=underline cterm=underline gui=underline
+" highlight LspWarningText guifg=#f8f8f2 guibg=#727808 gui=NONE
+" highlight Pmenu ctermbg=gray guibg=#36394a
+
+" nnoremap <silent> K <cmd>LspHover()<CR>
+
+" --------------------------------------------------------------------------------

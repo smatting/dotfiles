@@ -141,9 +141,14 @@ c() {
   cd "$dir"
 }
 
+csvjson() {
+    cat "$1" | tail -n 3 | head -n 1 | cut -f${2:-1} | jq
+}
+
 export TERM=xterm
 
-export PATH=~/.bin:$PATH
+export PATH=~/.npm-global-stefan/bin/:~/.bin:$PATH
+
 
 export PRINTER=Drucker2
 
@@ -154,4 +159,27 @@ export PRINTER=Drucker2
 # }
 alias av='aws-vault --backend file'
 source $(fzf-share)/key-bindings.zsh
+
+alias isodate='date +%Y-%m-%d'
+
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))"'
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /home/stefan/repos/mythology-api/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/stefan/repos/mythology-api/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /home/stefan/repos/mythology-api/node_modules/tabtab/.completions/sls.zsh ]] && . /home/stefan/repos/mythology-api/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /home/stefan/repos/mythology-api/node_modules/tabtab/.completions/slss.zsh ]] && . /home/stefan/repos/mythology-api/node_modules/tabtab/.completions/slss.zsh
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
+
+# direnv
 eval "$(direnv hook zsh)"
+
+source /home/stefan/.config/broot/launcher/bash/br
+source <(kubectl completion zsh)
