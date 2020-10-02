@@ -159,6 +159,7 @@ export PRINTER=Drucker2
 # }
 alias av='aws-vault --backend file'
 source $(fzf-share)/key-bindings.zsh
+
 alias isodate='date +%Y-%m-%d'
 
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
