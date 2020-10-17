@@ -1,13 +1,13 @@
 # Path to your oh-my-zsh configuration.
 # export ZSH=/nix/store/f35gv4zwr4z873msdzsvi7n81f33lrc5-oh-my-zsh-2018-04-25/share/oh-my-zsh
-# ZSH=$HOME/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 if [[ -f $HOME/.profile ]]; then
     source $HOME/.profile
 fi
 
 export ZSH_THEME=""
-export ZSH=$OH_MY_ZSH
+# export ZSH=$OH_MY_ZSH
 
 
 # Set name of the theme to load.
@@ -118,7 +118,8 @@ fi
 alias ns="nix-shell --command zsh"
 
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-alias vim="nvim"
+alias vim="emacsclient -t"
+alias emacs="emacsclient -t"
 alias nvim-session="MAIN_EDITOR=1 nvim"
 alias update-askby="ask-update-sources branch askby_py ~/repos/apkgs/sources.json && git add sources.json && ask-commit-sources"
 
@@ -145,7 +146,6 @@ csvjson() {
     cat "$1" | tail -n 3 | head -n 1 | cut -f${2:-1} | jq
 }
 
-export TERM=xterm
 
 export PATH=~/.npm-global-stefan/bin/:~/.bin:$PATH
 
@@ -181,5 +181,5 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; print (ul.quote_plu
 # direnv
 eval "$(direnv hook zsh)"
 
-source /home/stefan/.config/broot/launcher/bash/br
+# source /home/stefan/.config/broot/launcher/bash/br
 source <(kubectl completion zsh)
