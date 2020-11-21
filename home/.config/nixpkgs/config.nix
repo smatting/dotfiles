@@ -48,6 +48,7 @@
             altair
             dbus
             pygobject2
+            snakeviz
             # etaprogress
        ]);
 
@@ -62,6 +63,7 @@
            arrows
            async
            criterion
+           turtle
 
 
            # Cabal

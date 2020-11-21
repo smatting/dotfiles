@@ -15,11 +15,14 @@ import System.Taffybar.Widgets.PollingBar
 import System.Taffybar.Widgets.PollingGraph
 import System.Taffybar.Battery
 import System.Taffybar.CommandRunner
--- import System.Taffybar.WorkspaceHUD
 import System.Taffybar.DiskIOMonitor
 import System.Information.CPU2
 import Data.IORef
 import qualified Data.Text as T
+import System.Taffybar.Pager
+
+-- import System.Taffybar.WorkspaceSwitcher
+import Workspaces
 
 memCallback = do
   mi <- parseMeminfo
@@ -91,8 +94,10 @@ main = do
   cpu1 <- makeCpuBar "cpu1"
   cpu2 <- makeCpuBar "cpu2"
   cpu3 <- makeCpuBar "cpu3"
+  pager <- pagerNew defaultPagerConfig
+  let newSwitcher =  wspaceSwitcherNew pager
   -- defaultTaffybar defaultTaffybarConfig { startWidgets = [ pager, note ]
-  defaultTaffybar defaultTaffybarConfig { startWidgets = [myweather, myip, utcTime]
+  defaultTaffybar defaultTaffybarConfig { startWidgets = [newSwitcher, myweather, myip, utcTime]
                                         -- , endWidgets = reverse [ battery, tray, mem, cpu0, cpu1, cpu2, cpu3, clock ]
                                         , endWidgets = reverse [ battery, tray, mem, clock ]
                                         , monitorNumber = 1
