@@ -1,7 +1,8 @@
 {
     oraclejdk.accept_license = false;
-    allowUnfree = true; 
+    allowUnfree = true;
     allowBroken = true;
+
     packageOverrides = pkgs: with pkgs; {
        myPythonEnv = python37.withPackages (ps: with ps; [
             pylint
@@ -45,10 +46,11 @@
             cssselect
             reportlab
             altair
+            dbus
+            pygobject2
             # etaprogress
        ]);
 
-       
      myHaskellEnv = haskellPackages.ghcWithPackages
          (haskellPackages: with haskellPackages; [
            mtl

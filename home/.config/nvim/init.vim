@@ -130,7 +130,7 @@ Plug 'gabrielelana/vim-markdown'
 
 Plug 'sbdchd/neoformat'
 
-Plug 'neovim/nvim-lsp'
+" Plug 'neovim/nvim-lsp'
 Plug 'haorenW1025/diagnostic-nvim'
 
 "
@@ -376,25 +376,25 @@ let g:neoformat_enabled_purescript = ['mypurty']
 " See code here:
 " https://github.com/neovim/neovim/blob/master/runtime/lua/vim/lsp.lua
 
-function! LoadGHCIDE()
-lua << EOF
-require'nvim_lsp'.ghcide.setup{}
-EOF
-endfunction
-call LoadGHCIDE()
-" require'nvim_lsp'.purescriptls.setup{}
+" function! LoadGHCIDE()
+" lua << EOF
+" require'nvim_lsp'.ghcide.setup{}
+" EOF
+" endfunction
+" call LoadGHCIDE()
+" " require'nvim_lsp'.purescriptls.setup{}
 
-function! LSPStop()
-lua << EOF
-local lsp = require('vim.lsp')
-lsp.stop_client(lsp.get_active_clients())
-EOF
-endfunction
+" function! LSPStop()
+" lua << EOF
+" local lsp = require('vim.lsp')
+" lsp.stop_client(lsp.get_active_clients())
+" EOF
+" endfunction
 
-nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 
-let g:diagnostic_enable_virtual_text = 0
-lua require'nvim_lsp'.ghcide.setup{on_attach=require'diagnostic'.on_attach}
+" let g:diagnostic_enable_virtual_text = 0
+" lua require'nvim_lsp'.ghcide.setup{on_attach=require'diagnostic'.on_attach}
 
 nmap <F8> :NextDiagnostic<CR>
 nmap <F7> :PrevDiagnostic<CR>

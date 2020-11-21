@@ -118,8 +118,7 @@ fi
 alias ns="nix-shell --command zsh"
 
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-alias vim="emacsclient -t"
-alias emacs="emacsclient -t"
+# alias vim="emacsclient -t"
 alias nvim-session="MAIN_EDITOR=1 nvim"
 alias update-askby="ask-update-sources branch askby_py ~/repos/apkgs/sources.json && git add sources.json && ask-commit-sources"
 
@@ -183,3 +182,12 @@ eval "$(direnv hook zsh)"
 
 # source /home/stefan/.config/broot/launcher/bash/br
 source <(kubectl completion zsh)
+
+function agwire () {
+    ag $@ \
+    $HOME/repos/cailleach \
+    $HOME/repos/wire-docs \
+    $HOME/repos/wire-server \
+    $HOME/repos/wire-server-deploy \
+    $HOME/repos/wire-server-private \
+}
