@@ -191,3 +191,13 @@ function agwire () {
     $HOME/repos/wire-server-deploy \
     $HOME/repos/wire-server-private \
 }
+
+function withDir () {
+    savedir=$PWD
+    cd "$1";
+    argv=( "$@" )
+    eval "${argv[@]:2}";
+    cd $savedir
+}
+
+alias uuid4="cat /proc/sys/kernel/random/uuid"
