@@ -30,7 +30,8 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(ansible
+   '(nginx
+     ansible
      (auto-completion :variables
                       auto-completion-idle-delay nil)
      purescript
