@@ -373,6 +373,10 @@ you should place your code here."
 
   (global-set-key (kbd "C-1") 'zoom-frm-out)
   (global-set-key (kbd "C-2") 'zoom-frm-in)
+  ;; TODO add somehow <leader>b  (couldnt get it tow ork)
+  (global-set-key (kbd "<f9>") 'avy-pop-mark)
+  (global-set-key (kbd "<f12>") 'helm-buffers-list)
+  (evil-global-set-key 'normal (kbd "`") 'helm-buffers-list)
 
   ;; TODO: fix this
   ;; (defun my-magit-diff-keys ()
