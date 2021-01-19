@@ -200,3 +200,7 @@ function withDir () {
 }
 
 alias uuid4="cat /proc/sys/kernel/random/uuid"
+
+# for horrible wysiwyg editors like Confluence, Jira, etc.
+alias md2html="xclip -selection clipboard -o | pandoc | xclip -selection clipboard -i -t text/html"
+alias html2md="xclip -selection clipboard -o -t text/html | pandoc --from html --to markdown | xclip -selection clipboard -i"

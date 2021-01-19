@@ -76,7 +76,13 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(nix-mode lsp-haskell ormolu reformatter org-tempo jq-mode)
+   dotspacemacs-additional-packages '(nix-mode
+                                      lsp-haskell
+                                      ormolu
+                                      reformatter
+                                      org-tempo
+                                      dhall-mode
+                                      jq-mode)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -461,6 +467,7 @@ This function is called at the very end of Spacemacs initialization."
  '(beacon-color "#cc6666")
  '(custom-safe-themes
    '("4a201d19d8f7864e930fbb67e5c2029b558d26a658be1313b19b8958fe451b55" "c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" "0fffa9669425ff140ff2ae8568c7719705ef33b7a927a0ba7c5e2ffcfac09b75" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "bdc18d7f41451d56fb89348649647ff5b8475f33e8973ec2a3190460eed9941c" "fa96a61e4eca5f339ad7f1f3442cb5a83696f6a45d9fe2a7bf3b75fc6912bb91" "e47e52c3dac4c3b6a77e32dcdee6de63858277247485f7c569b35c04de9a1501" "73befaebf20e6ad59e8559acbe7f142412c84a0dfdd797df26cd77175119b59d" "0cd00c17f9c1f408343ac77237efca1e4e335b84406e05221126a6ee7da28971" "246cd0eb818bfd347b20fb6365c228fddf24ab7164752afe5e6878cb29b0204e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" "3a959a1c1765710e5478882053e56650852821e934c3d98f54860dfb91a52626" "df01ad8d956b9ea15ca75adbb012f99d2470f33c7b383a8be65697239086672e" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" default))
+ '(dhall-format-at-save nil)
  '(evil-want-Y-yank-to-eol nil)
  '(fci-rule-color "#383838" t)
  '(flycheck-color-mode-line-face-to-color 'mode-line-buffer-id)
