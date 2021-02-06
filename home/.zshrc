@@ -180,7 +180,7 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; print (ul.quote_plu
 eval "$(direnv hook zsh)"
 
 # source /home/stefan/.config/broot/launcher/bash/br
-source <(kubectl completion zsh)
+# source <(kubectl completion zsh)
 
 function agwire () {
     ag $@ \
