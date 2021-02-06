@@ -131,7 +131,7 @@ Plug 'gabrielelana/vim-markdown'
 Plug 'sbdchd/neoformat'
 
 " Plug 'neovim/nvim-lsp'
-Plug 'haorenW1025/diagnostic-nvim'
+" Plug 'haorenW1025/diagnostic-nvim'
 
 "
 call plug#end()
