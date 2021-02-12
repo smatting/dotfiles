@@ -20,12 +20,12 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "Fira Code" :size 18 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 16))
+      doom-variable-pitch-font (font-spec :family "Fira Code" :size 18 :weight 'semi-light))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-nord-light)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -35,9 +35,12 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+
 ;; TODO: why doesnt this work?
-;; (global-set-key (kbd "C-1") 'zoom-frm-out)
-;; (global-set-key (kbd "C-2") 'zoom-frm-in)
+;; - global zoom keys globally
+;; - bind <f9> 'avy-pop-mark
+;; - bin <SPC> c z to lsp-treemacs-error-list
+
 
 (add-hook 'haskell-mode-hook 'ormolu-format-on-save-mode)
 
