@@ -3,6 +3,8 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+;; TODO
+;; enable lsp-ui-mode in haskell
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
@@ -19,8 +21,8 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Fira Code" :size 18 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Fira Code" :size 18 :weight 'semi-light))
+(setq doom-font (font-spec :family "Fira Code" :size 16 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Fira Code" :size 14 :weight 'semi-light))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -35,14 +37,16 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;; Keybindings!
+;; Note: C-M-+ for zooming
 
-;; TODO: why doesnt this work?
-;; - global zoom keys globally
-;; - bind <f9> 'avy-pop-mark
-;; - bin <SPC> c z to lsp-treemacs-error-list
-
+(map! :leader "c z" #'lsp-treemacs-errors-list)
+(map! :leader "j" #'helm-mark-ring)
+(map! :leader "J" #'helm-global-mark-ring)
 
 (add-hook 'haskell-mode-hook 'ormolu-format-on-save-mode)
+;; doesnt work
+;; (add-hook 'haskell-mode-hook 'lsp-ui-mode)
 
 (unless window-system
     (when (getenv "DISPLAY")
@@ -58,6 +62,7 @@
       (setq interprogram-paste-function 'xclip-paste-function)
       ))
 
+(setq dhall-command "dhall-that-does-not-exist-because-it-slows-down-emacs")
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

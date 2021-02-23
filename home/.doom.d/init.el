@@ -14,10 +14,10 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
-(use-package-hook! treemacs
-  :post-config
-  (treemacs-follow-mode t)
-  t)
+;; (use-package-hook! treemacs
+;;   :post-config
+;;   (treemacs-follow-mode t)
+;;   t)
 
 (doom! :input
        ;;chinese
@@ -53,7 +53,7 @@
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        ;;window-select     ; visually switch windows
-       workspaces        ; tab emulation, persistence & separate workspaces
+       ;;workspaces        ; tab emulation, persistence & separate workspaces
        ;;zen               ; distraction-free coding or writing
 
        :editor
