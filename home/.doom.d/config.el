@@ -27,7 +27,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-nord-light)
+;; (setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-dracula)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -37,12 +38,21 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+(setq enable-local-variables t)
+
+
 ;; Keybindings!
 ;; Note: C-M-+ for zooming
+;;
+;; TODO: in flycheck-error-list-mode-map set mapping of "=" to flycheck-error-list-set-filter
+
+(map! :map flycheck-error-list-mode-map
+      "=" #'flycheck-error-list-set-filter)
 
 (map! :leader "c z" #'lsp-treemacs-errors-list)
 (map! :leader "j" #'helm-mark-ring)
 (map! :leader "J" #'helm-global-mark-ring)
+(map! :leader "SPC" #'projectile-switch-to-buffer)
 
 (add-hook 'haskell-mode-hook 'ormolu-format-on-save-mode)
 ;; doesnt work
