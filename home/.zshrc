@@ -183,7 +183,6 @@ if [ "$(hostname)" != "air" ]; then
     source <(kubectl completion zsh)
 fi
 
-source <(kubectl completion zsh)
 
 function agwire () {
     ag $@ \
@@ -208,7 +207,7 @@ alias uuid4="cat /proc/sys/kernel/random/uuid"
 alias md2html="xclip -selection clipboard -o | pandoc | xclip -selection clipboard -i -t text/html"
 alias html2md="xclip -selection clipboard -o -t text/html | pandoc --from html --to markdown | xclip -selection clipboard -i"
 
-if [ "$(hostname)" == "air" ]; then
+if [ "$(hostname)" = "air" ]; then
 	if [ -e /Users/stefan/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/stefan/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 fi
 
