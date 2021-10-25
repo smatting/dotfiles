@@ -156,7 +156,7 @@ export PRINTER=Drucker2
 #     cdf ~/
 # }
 alias av='aws-vault --backend file'
-source $(fzf-share)/key-bindings.zsh
+# source $(fzf-share)/key-bindings.zsh
 
 alias isodate='date +%Y-%m-%d'
 
@@ -179,8 +179,9 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; print (ul.quote_plu
 # direnv
 eval "$(direnv hook zsh)"
 
-# source /home/stefan/.config/broot/launcher/bash/br
-source <(kubectl completion zsh)
+if [ "$(hostname)" != "air" ]; then
+    source <(kubectl completion zsh)
+fi
 
 function agwire () {
     ag $@ \
@@ -204,3 +205,8 @@ alias uuid4="cat /proc/sys/kernel/random/uuid"
 # for horrible wysiwyg editors like Confluence, Jira, etc.
 alias md2html="xclip -selection clipboard -o | pandoc | xclip -selection clipboard -i -t text/html"
 alias html2md="xclip -selection clipboard -o -t text/html | pandoc --from html --to markdown | xclip -selection clipboard -i"
+
+if [ "$(hostname)" == "air" ]; then
+	if [ -e /Users/stefan/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/stefan/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+fi
+
