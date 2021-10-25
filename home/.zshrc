@@ -183,6 +183,8 @@ if [ "$(hostname)" != "air" ]; then
     source <(kubectl completion zsh)
 fi
 
+source <(kubectl completion zsh)
+
 function agwire () {
     ag $@ \
     $HOME/repos/cailleach \
