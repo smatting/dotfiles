@@ -179,7 +179,7 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; print (ul.quote_plu
 # direnv
 eval "$(direnv hook zsh)"
 
-if [ "$(hostname)" != "air" ]; then
+if [ -x "$(command -v kubectl)" ]; then
     source <(kubectl completion zsh)
 fi
 
