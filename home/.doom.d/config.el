@@ -71,21 +71,20 @@
             xclip-output )))
       (setq interprogram-cut-function 'xclip-cut-function)
       (setq interprogram-paste-function 'xclip-paste-function)
+
       ))
 
-(when (eq system-type 'darwin)
-  (defun copy-from-osx ()
-    (shell-command-to-string "pbpaste"))
+;; How to copy to Mac OX clipboard
+;; 1. Select text
+;; 2. SPC :
+;; Select "shell-command-on-region"
+;; 3. pbcopy RET
 
-  (defun paste-to-osx (text &optional push)
-    (let ((process-connection-type nil))
-      (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-        (process-send-string proc text)
-        (process-send-eof proc))))
-
-  (setq interprogram-cut-function 'paste-to-osx)
-  (setq interprogram-paste-function 'copy-from-osx))
-
+;; How to paste from Mac OX clipboard
+;; 1. SPC u - for universal argument C-u
+;; 2. SPC :
+;; Select "shell-command-on-region"
+;; 3. pbpaste RET
 
 (setq dhall-command "dhall-that-does-not-exist-because-it-slows-down-emacs")
 
