@@ -211,3 +211,6 @@ if [ "$(hostname)" = "air" ]; then
 	if [ -e /Users/stefan/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/stefan/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 fi
 
+alias todoist="todoist --indent --color"
+alias tgtd="todo l -f '#CS & #GTD'"
+alias teinkaufsliste="todo l -f '#Einkaufsliste'"
