@@ -21,6 +21,8 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
+;; (setq doom-font (font-spec :family "Fira Code" :size 16 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "Fira Code" :size 14 :weight 'semi-light))
 (setq doom-font (font-spec :family "Fira Code" :size 16 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Fira Code" :size 14 :weight 'semi-light))
 
@@ -40,6 +42,14 @@
 
 (setq enable-local-variables t)
 
+(setq auto-mode-alist (append '(("yaml\\.gotmpl\\'" . yaml-mode)
+                                ("yml\\.gotmpl\\'" . yaml-mode))
+                              auto-mode-alist ))
+
+(add-hook! yaml-mode
+  (setq truncate-lines t))
+
+(setq lsp-file-watch-threshold 200000)
 
 ;; Keybindings!
 ;; Note: C-M-+ for zooming
