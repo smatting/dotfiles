@@ -228,4 +228,3 @@ fi
 alias todoist="todoist --indent --color"
 alias tgtd="todo l -f '#CS & #GTD'"
 alias teinkaufsliste="todo l -f '#Einkaufsliste'"
->>>>>>> origin/master
