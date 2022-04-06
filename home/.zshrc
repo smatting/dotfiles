@@ -156,7 +156,7 @@ export PRINTER=Drucker2
 #     cdf ~/
 # }
 alias av='aws-vault --backend file'
-source $(fzf-share)/key-bindings.zsh
+# source $(fzf-share)/key-bindings.zsh
 
 alias isodate='date +%Y-%m-%d'
 
@@ -179,8 +179,10 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; print (ul.quote_plu
 # direnv
 eval "$(direnv hook zsh)"
 
-# source /home/stefan/.config/broot/launcher/bash/br
-# source <(kubectl completion zsh)
+if [ -x "$(command -v kubectl)" ]; then
+    source <(kubectl completion zsh)
+fi
+
 
 function agwire () {
     ag $@ \
@@ -217,3 +219,13 @@ gpopd() {
     sed -i -e '$d' $directory_stack
     cd $newdir
 }
+
+
+if [ "$(hostname)" = "air" ]; then
+   if [ -e /Users/stefan/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/stefan/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+fi
+
+alias todoist="todoist --indent --color"
+alias tgtd="todo l -f '#CS & #GTD'"
+alias teinkaufsliste="todo l -f '#Einkaufsliste'"
+>>>>>>> origin/master

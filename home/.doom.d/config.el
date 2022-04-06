@@ -64,6 +64,7 @@
 (map! :leader "J" #'helm-global-mark-ring)
 (map! :leader "SPC" #'projectile-switch-to-buffer)
 
+
 (add-hook 'haskell-mode-hook 'ormolu-format-on-save-mode)
 ;; doesnt work
 ;; (add-hook 'haskell-mode-hook 'lsp-ui-mode)
@@ -80,7 +81,20 @@
             xclip-output )))
       (setq interprogram-cut-function 'xclip-cut-function)
       (setq interprogram-paste-function 'xclip-paste-function)
+
       ))
+
+;; How to copy to Mac OX clipboard
+;; 1. Select text
+;; 2. SPC :
+;; Select "shell-command-on-region"
+;; 3. pbcopy RET
+
+;; How to paste from Mac OX clipboard
+;; 1. SPC u - for universal argument C-u
+;; 2. SPC :
+;; Select "shell-command-on-region"
+;; 3. pbpaste RET
 
 (setq dhall-command "dhall-that-does-not-exist-because-it-slows-down-emacs")
 

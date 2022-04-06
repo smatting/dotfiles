@@ -65,7 +65,7 @@ Plug 'Shougo/neocomplete.vim'
 " Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
+" Plug 'garbas/vim-snipmate'
 
 " Colorschemes
 Plug 'flazz/vim-colorschemes'
