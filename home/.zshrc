@@ -200,7 +200,20 @@ function withDir () {
 }
 
 alias uuid4="cat /proc/sys/kernel/random/uuid"
+alias open-pr="gh pr view --web"
+alias vim=nvim
 
-# for horrible wysiwyg editors like Confluence, Jira, etc.
-alias md2html="xclip -selection clipboard -o | pandoc | xclip -selection clipboard -i -t text/html"
-alias html2md="xclip -selection clipboard -o -t text/html | pandoc --from html --to markdown | xclip -selection clipboard -i"
+termtitle() { printf "\033]0;$*\007"; }
+
+directory_stack=~/.directory_stack
+
+gpushd() {
+    echo $(pwd) >> $directory_stack
+}
+
+gpopd() {
+    [ ! -s $directory_stack ] && return
+    newdir=$(sed -n '$p' $directory_stack)
+    sed -i -e '$d' $directory_stack
+    cd $newdir
+}
