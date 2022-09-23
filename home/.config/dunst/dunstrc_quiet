@@ -437,3 +437,46 @@
 ################################################################################
 
 
+[rule_1]
+    skip_display = "true"
+
+[rule_2]
+    summary = "wire.com|wire.link"
+    urgency = "critical"
+
+[rule_3]
+    summary = "wire.com|wire.link"
+    body = " in "
+    urgency = "normal"
+
+[rule_4]
+    summary = "wire.com|wire.link"
+    body = "[Mm]ention:"
+    urgency = "critical"
+
+[rule_5]
+    summary = "wire.com|wire.link"
+    body = "Reply:"
+    urgency = "critical"
+
+[rule_6]
+    summary = "wire.com|wire.link"
+    body = "Calling"
+    urgency = "critical"
+
+[rule_7]
+    summary = "wire.com|wire.link"
+    body = "backend"
+    urgency = "critical"
+
+[rule_8]
+    summary = "wire.com|wire.link"
+    body = " in Backend \+"
+    urgency = "critical"
+
+[rule_9]
+    msg_urgency = "critical"
+    background = "#7b5a78"
+    foreground = "#ffffff"
+    skip_display = "false"
+

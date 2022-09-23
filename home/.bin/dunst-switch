@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -u
+
+profile=$1
+
+pkill -f dunst
+pkill -f notify-osd
+
+notify-send -u critical system "switching to profile $profile"
+set -e
+dunst -config ~/.config/dunst/dunstrc_presentation
