@@ -49,7 +49,30 @@
 (add-hook! yaml-mode
   (setq truncate-lines t))
 
-(setq lsp-file-watch-threshold 200000)
+(setq lsp-file-watch-threshold 3000)
+
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]nginz\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]charts\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]dist-buildah\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]dist-newstyle\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]libzauth-c\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.local\\'")
+  )
+
+;; lsp performance
+(setq company-minimum-prefix-length 4) ;; default is 2
+(setq lsp-idle-delay 0.500) ;; default 0.5
+(after! gcmh
+  (setq gcmh-high-cons-threshold 67108864))
+
+(add-hook 'lsp-after-initialize-hook
+          '(lambda ()
+             (lsp--set-configuration
+              '(:haskell (:plugin (:tactics (:globalOn :json-false)
+                                   :alternateNumberFormat (:globalOn :json-false)
+                                   )))
+              )))
 
 ;; Keybindings!
 ;; Note: C-M-+ for zooming
@@ -64,8 +87,10 @@
 (map! :leader "J" #'helm-global-mark-ring)
 (map! :leader "SPC" #'projectile-switch-to-buffer)
 
+(setq-default flycheck-disabled-checkers '(haskell haskell-stack haskell-stack-ghc))
+;; (add-to-list 'flycheck-disabled-checkers 'emacs-lisp-checkdoc)
 
-(add-hook 'haskell-mode-hook 'ormolu-format-on-save-mode)
+;; (add-hook 'haskell-mode-hook 'ormolu-format-on-save-mode)
 ;; doesnt work
 ;; (add-hook 'haskell-mode-hook 'lsp-ui-mode)
 
@@ -126,3 +151,5 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(setq nix-nixfmt-bin "nixpkgs-fmt")
