@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xu
+set -x
 
 profile=$1
 
@@ -8,5 +8,11 @@ pkill -f "dunst\s|dunst$"
 pkill -f notify-osd
 
 set -e
-dunst -config "~/.config/dunst/dunstrc_$profile" &
-notify-send -u critical system "switching to profile $profile"
+
+if [ "$profile" = "" ]; then
+    dunst -config "~/.config/dunst/dunstrc" &
+    notify-send -u critical system "switching to default config"
+else
+    dunst -config "~/.config/dunst/dunstrc_$profile" &
+    notify-send -u critical system "switching to profile $profile"
+fi

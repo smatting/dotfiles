@@ -12,9 +12,14 @@ rule_idx = 1
 attrs_critical = {'urgency':  "critical"}
 attrs_normal = {'urgency':  "normal"}
 attrs_ignore = {"skip_display": "true"}
-attrs_attention = {'background':  "#7b5a78", "foreground": "#ffffff", "skip_display": "false"}
+attrs_attention = {'background':  "#7b5a78", "frame_color": "#333333", "foreground": "#ffffff", "skip_display": "false"}
 
-wire = {'summary': 'wire.com|wire.link'}
+
+def wire(rule):
+    if rule.get('body') is None:
+        rule['body'] = ''
+    rule['body'] = '.*(wire.com|wire.link).*' + rule['body']
+    return rule
 
 def fpath(fname):
     return os.path.join(mydir, fname)
@@ -63,13 +68,12 @@ def j(dicts):
 
 def tag_rules():
     return [
-        new_rule(j([wire, {}]), attrs_critical),
-        new_rule(j([wire, {'body': ' in '}]), attrs_normal),
-        new_rule(j([wire, {'body': '[Mm]ention:'}]), attrs_critical),
-        new_rule(j([wire, {'body': 'Reply:'}]), attrs_critical),
-        new_rule(j([wire, {'body': 'Calling'}]), attrs_critical),
-        new_rule(j([wire, {'body': 'backend'}]), attrs_critical),
-        new_rule(j([wire, {'body': ' in Backend \\+'}]), attrs_critical)
+        new_rule(j([wire({})]), attrs_critical),
+        new_rule(j([wire({'summary': ' in '})]), attrs_normal),
+        new_rule(j([wire({'body': '[Mm]ention:'})]), attrs_critical),
+        new_rule(j([wire({'body': 'Reply:'})]), attrs_critical),
+        new_rule(j([wire({'body': 'Calling'})]), attrs_critical),
+        new_rule(j([wire({'body': 'backend'})]), attrs_critical)
     ]
 
 def write_config_rules(path, rules):
@@ -84,12 +88,12 @@ def main():
             [new_rule({}, attrs_ignore)]
             + tag_rules()
             + [new_rule({'msg_urgency': 'critical'}, attrs_attention)],
-        'presentation': [new_rule(wire, attrs_ignore)]
+        'presentation': [new_rule(wire({}), attrs_ignore)]
     }
     for name, rules in profiles.items():
         write_config_rules(fpath(f'dunstrc_{name}'), rules)
 
-    write_config_rules(fpath(f'dunstrc'), [])
+    write_config_rules(fpath(f'dunstrc'), tag_rules() + [new_rule({'msg_urgency': 'critical'}, attrs_attention)])
 
 if __name__ == '__main__':
     main()

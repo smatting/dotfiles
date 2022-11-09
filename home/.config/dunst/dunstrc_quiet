@@ -30,7 +30,7 @@
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
     # geometry = "300x5-30+20"
-    geometry = "1000x0-40+40"
+    geometry = "900x0-500+80"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -441,42 +441,38 @@
     skip_display = "true"
 
 [rule_2]
-    summary = "wire.com|wire.link"
+    body = ".*(wire.com|wire.link).*"
     urgency = "critical"
 
 [rule_3]
-    summary = "wire.com|wire.link"
-    body = " in "
+    summary = " in "
+    body = ".*(wire.com|wire.link).*"
     urgency = "normal"
 
 [rule_4]
-    summary = "wire.com|wire.link"
-    body = "[Mm]ention:"
+    body = ".*(wire.com|wire.link).*[Mm]ention:"
     urgency = "critical"
 
 [rule_5]
-    summary = "wire.com|wire.link"
-    body = "Reply:"
+    body = ".*(wire.com|wire.link).*Reply:"
     urgency = "critical"
 
 [rule_6]
-    summary = "wire.com|wire.link"
-    body = "Calling"
+    body = ".*(wire.com|wire.link).*Calling"
     urgency = "critical"
 
 [rule_7]
-    summary = "wire.com|wire.link"
-    body = "backend"
+    body = ".*(wire.com|wire.link).*backend"
     urgency = "critical"
 
 [rule_8]
-    summary = "wire.com|wire.link"
-    body = " in Backend \+"
+    body = ".*(wire.com|wire.link).* in Backend \+"
     urgency = "critical"
 
 [rule_9]
     msg_urgency = "critical"
     background = "#7b5a78"
+    frame_color = "#333333"
     foreground = "#ffffff"
     skip_display = "false"
 
