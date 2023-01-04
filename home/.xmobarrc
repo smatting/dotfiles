@@ -31,8 +31,8 @@ Config { -- font = "-misc-fixed-*-*-*-*-14-*-*-*-*-*-*-*"
                     , Run Swap [] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
                     , Run Date "%Y-%m-%d %H:%M" "date" 10
-                    , Run Com "date" ["+%a %m-%d %H:%M %Z"] "customdate" 100
-                    , Run Com "date" ["-u", "+%Y-%m-%d %H:%M %Z"] "isodate" 100
+                    , Run Com "env" ["TZ=Europe/Berlin", "date", "+%a %m-%d %H:%M"] "customdate" 100
+                    , Run Com "env" ["TZ=Australia/Brisbane", "date", "+%H:%M"] "time_australia" 100
                     , Run Battery [
                         "-t", "<acstatus>: <left>% - <timeleft>",
                         "--",
@@ -47,5 +47,5 @@ Config { -- font = "-misc-fixed-*-*-*-*-14-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %animal% %customdate% (%isodate%) ∙ %cpu% ∙ %memory% ∙ %battery% ∙ %status% }{"
+       , template = " %animal% %customdate% (Berlin), %time_australia% (Australia) ∙ %cpu% ∙ %memory% ∙ %battery% ∙ %status% }{"
        }
