@@ -70,6 +70,7 @@ def tag_rules():
     return [
         new_rule(j([wire({})]), attrs_critical),
         new_rule(j([wire({'summary': ' in '})]), attrs_normal),
+        new_rule({'summary': 'pomo'}, attrs_critical),
         new_rule(j([wire({'body': '[Mm]ention:'})]), attrs_critical),
         new_rule(j([wire({'body': 'Reply:'})]), attrs_critical),
         new_rule(j([wire({'body': 'Calling'})]), attrs_critical),

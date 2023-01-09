@@ -450,23 +450,23 @@
     urgency = "normal"
 
 [rule_4]
-    body = ".*(wire.com|wire.link).*[Mm]ention:"
+    summary = "pomo"
     urgency = "critical"
 
 [rule_5]
-    body = ".*(wire.com|wire.link).*Reply:"
+    body = ".*(wire.com|wire.link).*[Mm]ention:"
     urgency = "critical"
 
 [rule_6]
-    body = ".*(wire.com|wire.link).*Calling"
+    body = ".*(wire.com|wire.link).*Reply:"
     urgency = "critical"
 
 [rule_7]
-    body = ".*(wire.com|wire.link).*backend"
+    body = ".*(wire.com|wire.link).*Calling"
     urgency = "critical"
 
 [rule_8]
-    body = ".*(wire.com|wire.link).* in Backend \+"
+    body = ".*(wire.com|wire.link).*backend"
     urgency = "critical"
 
 [rule_9]
