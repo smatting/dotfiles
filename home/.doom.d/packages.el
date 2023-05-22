@@ -11,6 +11,9 @@
 (package! lsp-treemacs)
 (package! dhall-mode)
 
+; (package! lsp-mode :pin "bc8889c21813d61587f1310b29ce6c066d2adb859")
+(package! lsp-mode :pin "7a50934cbbe0aec1a1a054e7d13fce804a1708c6")
+
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/raxod502/straight.el#the-recipe-format

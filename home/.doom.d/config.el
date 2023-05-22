@@ -49,7 +49,7 @@
 (add-hook! yaml-mode
   (setq truncate-lines t))
 
-(setq lsp-file-watch-threshold 3000)
+(setq lsp-file-watch-threshold 500000)
 
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]nginz\\'")
