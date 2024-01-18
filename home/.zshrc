@@ -227,11 +227,14 @@ fi
 
 alias todoist="todoist --indent --color"
 alias tgtd="todo l -f '#CS & #GTD'"
-alias teinkaufsliste="todo l -f '#Einkaufsliste'"
 
-if [ -e "~/.secrets" ]; then
-  source ~/.secrets
+if [ -f ~/.secrets ]; then
+    source ~/.secrets
 fi
+
 
 umask 077
 ulimit -n 10000
+
+export ws="/home/stefan/repos/wire-server"
+export cl="/home/stefan/repos/cailleach"
