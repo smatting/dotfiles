@@ -64,6 +64,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
@@ -80,6 +81,7 @@ require('lazy').setup({
   'tpope/vim-sleuth',
 
   'nvim-tree/nvim-tree.lua',
+
   'nvim-tree/nvim-web-devicons',
 
   -- NOTE: This is where your plugins related to LSP can be installed.
@@ -106,9 +108,9 @@ require('lazy').setup({
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-        require("nvim-surround").setup({
-            -- Configuration here, or leave empty to use defaults
-        })
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
     end
   },
 
@@ -237,7 +239,7 @@ require('lazy').setup({
 
   {
     dir="/home/stefan/repos/neogit",
-  -- "NeogitOrg/neogit",
+    -- "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",         -- required
       "nvim-telescope/telescope.nvim", -- optional
@@ -245,22 +247,30 @@ require('lazy').setup({
       "ibhagwan/fzf-lua",              -- optional
     },
     config = true
-  }
+  },
 
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
+  {
+    'mrcjkb/haskell-tools.nvim',
+    version = '^3', -- Recommended
+    ft = { 'haskell', 'lhaskell', 'cabal', 'cabalproject' },
+  },
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
-  --
+  { 'ckipp01/nvim-jenkinsfile-linter', requires = { "nvim-lua/plenary.nvim" } } 
+
+-- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
+--       These are some example plugins that I've included in the kickstart repository.
+--       Uncomment any of the lines below to enable them.
+-- require 'kickstart.plugins.autoformat',
+-- require 'kickstart.plugins.debug',
+
+-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+--    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
+--    up-to-date with whatever is in the kickstart repo.
+--    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+--
+--    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
+-- { import = 'custom.plugins' },
+--
 }, {})
 
 -- [[ Setting options ]]
@@ -324,7 +334,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
@@ -343,7 +352,7 @@ pcall(require('telescope').load_extension, 'fzf')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader><space>', function() require('telescope.builtin').buffers { sort_mru = true }  end, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -369,6 +378,17 @@ local copyFilePath = function()
   vim.notify('Copied "' .. path .. '" to the clipboard!')
 end
 vim.keymap.set('n', '<leader>cp', copyFilePath, { desc = 'Copy current file path' })
+
+local cdIntoFile = function()
+  local path = vim.fn.expand("%:p")
+  local dir = vim.fs.dirname(path)
+  result = vim.fn.system("cd \"" .. dir .. "\" &&  git rev-parse --show-toplevel")
+  vim.fn.execute("cd " .. result)
+  -- vim.api.nvim_exec(command, true) 
+-- git rev-parse --show-toplevel
+end
+
+vim.keymap.set('n', '<leader>cd', cdIntoFile, { desc = 'CD into repo of current file' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -657,12 +677,19 @@ end
 
 -- pass to setup along with your other options
 require("nvim-tree").setup {
-  ---
   on_attach = nvim_tree_on_attach,
-  ---
+  actions = {
+    change_dir = {
+      enable = true,
+      global = true,
+      restrict_above_cwd = false
+    }
+  }
 }
 
 vim.api.nvim_create_user_command('Config', function() vim.cmd('e ~/.config/nvim/init.lua') end, {})
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+vim.filetype.add { filename = { ["Jenkinsfile"] = 'groovy' } }
+
+
+
