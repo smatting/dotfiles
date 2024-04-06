@@ -232,7 +232,6 @@ if [ -f ~/.secrets ]; then
     source ~/.secrets
 fi
 
-
 umask 077
 ulimit -n 10000
 
