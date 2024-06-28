@@ -45,7 +45,8 @@ export ZSH_THEME=""
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # plugins=(git common-aliases asdgasdg)
-plugins=(git vi-mode)
+#plugins=(git vi-mode zsh-fzf-history-search)
+plugins=(git vi-mode zaw)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -88,9 +89,15 @@ alias venv="source ./.venv/bin/activate"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
+# Run the command given by "$@" in the background
+silent_background() {
+  setopt local_options no_notify no_monitor
+  # We'd use &| to background and disown, but incompatible with bash, so:
+  "$@" >/dev/null 2>&1 &
+  disown &>/dev/null  # Close STD{OUT,ERR} to prevent whine if job has already completed
+}
 
-
-alias here="st > /dev/null 2>&1 & disown"
+alias here="silent_background kitty"
 DISABLE_AUTO_TITLE="true"
 
 alias ls="ls -G --color=auto"
@@ -125,9 +132,9 @@ alias jan-lpr="lpr -H 192.168.0.106 -P Brother_DCP-9022CDW"
 alias grab="import png:- | xclip -selection c -t image/png"
 #
 # Get into a shell to run openstack commands
-alias oscsh='docker run -ti --rm -v /home/stefan/.local/share/openstack-cli-data:/data --env-file ${RC_ENV_FILE:-~/.config/osc_rc.env} jmcvea/openstack-client'
+# alias oscsh='docker run -ti --rm -v /home/stefan/.local/share/openstack-cli-data:/data --env-file ${RC_ENV_FILE:-~/.config/osc_rc.env} jmcvea/openstack-client'
 # Make it look like you're running openstack locally
-alias openstack='oscsh openstack'
+# alias openstack='oscsh openstack'
 
 alias ipython='python -m IPython'
 alias ns='nix-shell --run $SHELL'
@@ -237,3 +244,9 @@ ulimit -n 10000
 
 export ws="/home/stefan/repos/wire-server"
 export cl="/home/stefan/repos/cailleach"
+
+function fetchCert() {
+    openssl s_client -servername "$1" -connect "$1":443 2>&1 | openssl x509 -inform pem -text
+}
+
+bindkey '^r' zaw-history

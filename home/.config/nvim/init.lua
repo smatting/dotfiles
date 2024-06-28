@@ -255,7 +255,17 @@ require('lazy').setup({
     ft = { 'haskell', 'lhaskell', 'cabal', 'cabalproject' },
   },
 
-  { 'ckipp01/nvim-jenkinsfile-linter', requires = { "nvim-lua/plenary.nvim" } } 
+  { 'ckipp01/nvim-jenkinsfile-linter', requires = { "nvim-lua/plenary.nvim" } },
+  { 'dhruvasagar/vim-table-mode' },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  }
 
 -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
 --       These are some example plugins that I've included in the kickstart repository.
@@ -370,6 +380,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
 vim.keymap.set('n', '<leader>ot', function() require('nvim-tree.api').tree.open({find_file = true}) end, { desc = '[O]pen file  in [T]ree' })
+vim.keymap.set('n', '<leader>od', function() require('nvim-tree.api').tree.open({path = vim.fn.getcwd()}) end, { desc = '[O]pen current [d]irectory ' })
 vim.keymap.set('n', '<leader>gg', require('neogit').open, { desc = 'Open Neogit' })
 
 local copyFilePath = function()
