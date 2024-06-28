@@ -250,3 +250,4 @@ function fetchCert() {
 }
 
 bindkey '^r' zaw-history
+alias tf=terraform
