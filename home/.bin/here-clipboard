@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+file_in_clipboard=$(xsel -ob)
+dirname=$(dirname $file_in_clipboard)
+cd "$dirname"
+exec kitty
