@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh configuration.
-# export ZSH=/nix/store/f35gv4zwr4z873msdzsvi7n81f33lrc5-oh-my-zsh-2018-04-25/share/oh-my-zsh
+# export ZSH=/nix/store/f35gv4zwr4z873msdzsvi7n81f33lrc5-oh-my-zsh-2018-4-25/share/oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
 
 if [[ -f $HOME/.profile ]]; then
@@ -52,9 +52,13 @@ source $ZSH/oh-my-zsh.sh
 
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 
+function my_prompt_hints() {
+    if (command -v prompt_hints &> /dev/null); then
+        prompt_hints
+    fi
+}
 
-
-PROMPT='🚀 %{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}'$'\n''λ%{$reset_color%} '
+PROMPT='$(my_prompt_hints)%{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}'$'\n''λ%{$reset_color%} '
 #PROMPT='%m [$IN_NIX_SHELL] %{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}λ '
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX=" %{$reset_color%}"
@@ -91,10 +95,10 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 # Run the command given by "$@" in the background
 silent_background() {
-  setopt local_options no_notify no_monitor
-  # We'd use &| to background and disown, but incompatible with bash, so:
-  "$@" >/dev/null 2>&1 &
-  disown &>/dev/null  # Close STD{OUT,ERR} to prevent whine if job has already completed
+    setopt local_options no_notify no_monitor
+    # We'd use &| to background and disown, but incompatible with bash, so:
+    "$@" >/dev/null 2>&1 &
+    disown &>/dev/null  # Close STD{OUT,ERR} to prevent whine if job has already completed
 }
 
 alias here="silent_background kitty"
@@ -104,13 +108,14 @@ alias ls="ls -G --color=auto"
 alias ipy="nix-shell --command ipython"
 alias gg='git log --graph --oneline --date-order'
 alias ns='nix-shell --command zsh'
+alias cd-clipboard='cd "$(dirname "$(wl-paste)")"'
 
 eval `dircolors ~/.dircolors`
 
 function nvm-use () {
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    nvm use --delete-prefix v10.9.0 node
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+nvm use --delete-prefix v1.9.0 node
 }
 
 if [ -e ~/.nix-profile/bin/ghc ]; then
@@ -136,7 +141,7 @@ alias grab="import png:- | xclip -selection c -t image/png"
 # Make it look like you're running openstack locally
 # alias openstack='oscsh openstack'
 
-alias ipython='python -m IPython'
+alias ipython='python3 -m IPython'
 alias ns='nix-shell --run $SHELL'
 
 
@@ -152,7 +157,7 @@ csvjson() {
 }
 
 
-export PATH=~/.npm-global-stefan/bin/:~/.bin:$PATH
+#export PATH=~/.npm-global-stefan/bin/:~/.bin:$PATH
 
 
 export PRINTER=Drucker2
