@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+f=$(mktemp --suffix=.png)
+wayshot -s "$(slurp)" -f "$f"
+echo "$f" | wl-copy
