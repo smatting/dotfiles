@@ -42,11 +42,17 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.g.maplocalleader = ' '
 
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 -- vim.cmd("set autochdir")
+--
+vim.o.expandtab = true
+vim.o.smartindent = true
+vim.o.tabstop = 2 
+vim.o.shiftwidth = 2
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -76,9 +82,6 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
-
-  -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
 
   'nvim-tree/nvim-tree.lua',
 
@@ -131,7 +134,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  -- { 'folke/which-key.nvim', opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -264,7 +267,11 @@ require('lazy').setup({
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     }
+  },
+  {
+    "nvim-pack/nvim-spectre"
   }
+
 
 -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
 --       These are some example plugins that I've included in the kickstart repository.
@@ -375,6 +382,7 @@ vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { des
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sb', function() require('telescope.builtin').live_grep({grep_open_files = true}) end, { desc = '[S]earch in [B]uffers'})
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
@@ -551,15 +559,15 @@ lspconfig.terraformls.setup {}
 -- after the language server attaches to the current buffervim.api.nvim_create_autocmd('LspAttach', {
 
 -- document existing key chains
-require('which-key').register {
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-}
+-- require('which-key').register {
+--   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
+--   ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
+--   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+--   ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
+--   ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+--   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+--   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+-- }
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
@@ -671,6 +679,12 @@ local function search_in_dir()
   local nvim_tree = require "telescope.builtin".live_grep({search_dirs={path}})
 end
 
+local function spectre_in_dir()
+  local nvim_tree_api = require "nvim-tree.api"
+  local path = nvim_tree_api.tree.get_node_under_cursor().absolute_path
+  require('spectre').open({cwd=path})
+end
+
 local function nvim_tree_on_attach(bufnr)
   local api = require "nvim-tree.api"
 
@@ -683,6 +697,7 @@ local function nvim_tree_on_attach(bufnr)
 
   -- custom mappings
   vim.keymap.set('n', '<leader>sd',  search_in_dir,  opts('Search in directory'))
+  vim.keymap.set('n', '<leader>ss',  spectre_in_dir,  opts('Replace with spectre'))
 end
 
 -- pass to setup along with your other options
