@@ -256,3 +256,5 @@ function fetchCert() {
 
 bindkey '^r' zaw-history
 alias tf=terraform
+
+alias cd-clipboard='cd $(dirname "$(xsel -ob)")'
