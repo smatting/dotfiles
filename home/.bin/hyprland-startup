@@ -2,7 +2,7 @@
 
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 
-kitty weechat &
+slack &
 
 swayidle -w timeout 600 hyprlock & # lock screen after 10 min of idle
 
