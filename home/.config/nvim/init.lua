@@ -408,6 +408,54 @@ end
 
 vim.keymap.set('n', '<leader>cd', cdIntoFile, { desc = 'CD into repo of current file' })
 
+local projectPicker = function()
+  local pickers = require('telescope.pickers')
+  local finders = require('telescope.finders')
+  local conf = require('telescope.config').values
+  local actions = require('telescope.actions')
+  local action_state = require('telescope.actions.state')
+  
+  local repos_dir = '/home/stefan/repos'
+  local handle = vim.loop.fs_scandir(repos_dir)
+  local dirs = {}
+  
+  if handle then
+    local name, type = vim.loop.fs_scandir_next(handle)
+    while name do
+      if type == 'directory' then
+        table.insert(dirs, repos_dir .. '/' .. name)
+      end
+      name, type = vim.loop.fs_scandir_next(handle)
+    end
+  end
+  
+  pickers.new({}, {
+    prompt_title = 'Project Directory',
+    finder = finders.new_table({
+      results = dirs,
+      entry_maker = function(entry)
+        return {
+          value = entry,
+          display = vim.fn.fnamemodify(entry, ':t'),
+          ordinal = vim.fn.fnamemodify(entry, ':t'),
+        }
+      end,
+    }),
+    sorter = conf.generic_sorter({}),
+    attach_mappings = function(prompt_bufnr, map)
+      actions.select_default:replace(function()
+        local selection = action_state.get_selected_entry()
+        actions.close(prompt_bufnr)
+        vim.cmd('cd ' .. selection.value)
+        vim.notify('Changed directory to: ' .. selection.value)
+      end)
+      return true
+    end,
+  }):find()
+end
+
+vim.keymap.set('n', '<leader>pp', projectPicker, { desc = '[P]roject [P]icker' })
+
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'

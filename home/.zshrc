@@ -128,7 +128,6 @@ fi
 #alias heroku=/home/stefan/node_modules/heroku-cli/bin/run
 alias ns="nix-shell --command zsh"
 
-export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 # alias vim="emacsclient -t"
 alias nvim-session="MAIN_EDITOR=1 nvim"
 alias update-askby="ask-update-sources branch askby_py ~/repos/apkgs/sources.json && git add sources.json && ask-commit-sources"
@@ -141,7 +140,7 @@ alias grab="import png:- | xclip -selection c -t image/png"
 # Make it look like you're running openstack locally
 # alias openstack='oscsh openstack'
 
-alias ipython='python3 -m IPython'
+alias ipython='python -m IPython'
 alias ns='nix-shell --run $SHELL'
 
 
@@ -244,7 +243,7 @@ if [ -f ~/.secrets ]; then
     source ~/.secrets
 fi
 
-umask 077
+umask 022
 ulimit -n 10000
 
 export ws="/home/stefan/repos/wire-server"
@@ -255,4 +254,5 @@ function fetchCert() {
 }
 
 bindkey '^r' zaw-history
-alias tf=terraform
+
+alias k=kubectl
