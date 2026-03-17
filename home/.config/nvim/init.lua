@@ -581,26 +581,26 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 local lspconfig = require('lspconfig')
 
-lspconfig.efm.setup {
-    init_options = {documentFormatting = true},
-    settings = {
-        rootMarkers = {".git/"},
-        languages = {
-            sh = {
-              {lintCommand = "shellcheck -f gcc -x",
-               lintSource = "shellcheck", 
-               lintFormats = {"%f:%l:%c: %trror: %m", "%f:%l:%c: %tarning: %m", "%f:%l:%c: %tote: %m"}
-              } 
-            }
-            -- lua = {
-            --     {formatCommand = "lua-format -i", formatStdin = true}
-            -- }
-        }
-    },
-    filetypes = { 'sh' }
-}
+-- lspconfig.efm.setup {
+--     init_options = {documentFormatting = true},
+--     settings = {
+--         rootMarkers = {".git/"},
+--         languages = {
+--             sh = {
+--               {lintCommand = "shellcheck -f gcc -x",
+--                lintSource = "shellcheck", 
+--                lintFormats = {"%f:%l:%c: %trror: %m", "%f:%l:%c: %tarning: %m", "%f:%l:%c: %tote: %m"}
+--               } 
+--             }
+--             -- lua = {
+--             --     {formatCommand = "lua-format -i", formatStdin = true}
+--             -- }
+--         }
+--     },
+--     filetypes = { 'sh' }
+-- }
 
-lspconfig.terraformls.setup {}
+-- lspconfig.terraformls.setup {}
 
 
 -- Use LspAttach autocommand to only map the following keys
