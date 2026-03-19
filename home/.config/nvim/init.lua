@@ -386,7 +386,18 @@ vim.keymap.set('n', '<leader>sb', function() require('telescope.builtin').live_g
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
-vim.keymap.set('n', '<leader>ot', function() require('nvim-tree.api').tree.open({find_file = true}) end, { desc = '[O]pen file  in [T]ree' })
+vim.keymap.set('n', '<leader>ot', function()
+  local api = require('nvim-tree.api')
+  local path = vim.fn.expand("%:p")
+  local dir = vim.fs.dirname(path)
+  local git_root = vim.trim(vim.fn.system("cd \"" .. dir .. "\" && git rev-parse --show-toplevel"))
+  if vim.v.shell_error ~= 0 then
+    git_root = dir
+  end
+  api.tree.close()
+  api.tree.open({ path = git_root, find_file = true })
+  vim.schedule(function() vim.cmd('normal! zz') end)
+end, { desc = '[O]pen file in [T]ree' })
 vim.keymap.set('n', '<leader>od', function() require('nvim-tree.api').tree.open({path = vim.fn.getcwd()}) end, { desc = '[O]pen current [d]irectory ' })
 vim.keymap.set('n', '<leader>gg', require('neogit').open, { desc = 'Open Neogit' })
 
