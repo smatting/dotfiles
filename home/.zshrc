@@ -53,12 +53,19 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 
 function my_prompt_hints() {
-    if (command -v prompt_hints &> /dev/null); then
-        prompt_hints
-    fi
+  h=$(hostname)
+  if [[ "$h" == "bjorn" ]]; then
+    echo -n "🦩🐠"
+    return
+  fi
+  if [[ "$h" == "home" ]]; then
+    echo -n "🐘🦖"
+    return
+  fi
+  echo -n "λ"
 }
 
-PROMPT='$(my_prompt_hints)%{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}'$'\n''λ%{$reset_color%} '
+PROMPT='%c %{$fg[green]%}$(git_prompt_info)%{$fg[blue]%}'$'\n''$(my_prompt_hints)%{$reset_color%} '
 #PROMPT='%m [$IN_NIX_SHELL] %{$fg[green]%}%c $(git_prompt_info)%{$fg[blue]%}λ '
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX=" %{$reset_color%}"
