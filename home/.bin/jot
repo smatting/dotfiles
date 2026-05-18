@@ -79,6 +79,15 @@ def cmd_modify(args):
     print(f'Jot #{args.id} updated')
 
 
+def cmd_view(args):
+    r = requests.get(_url(f'/api/jots/{args.id}'), auth=_auth())
+    if r.status_code == 404:
+        print(f'error: jot #{args.id} not found', file=sys.stderr)
+        sys.exit(1)
+    r.raise_for_status()
+    print(r.json()['content'])
+
+
 def cmd_delete(args):
     r = requests.delete(_url(f'/api/jots/{args.id}'), auth=_auth())
     if r.status_code == 404:
@@ -107,24 +116,20 @@ def relative_time(ts):
 
 
 def cmd_list(args):
-    r = requests.get(_url('/api/jots'), params={'page': args.page}, auth=_auth())
+    r = requests.get(_url('/api/jots'), params={'page': args.page, 'page_size': 5}, auth=_auth())
     r.raise_for_status()
     data = r.json()
+    jots = list(reversed(data['jots']))
     if args.plain:
-        for jot in data['jots']:
+        for jot in jots:
             print(jot['content'])
             print('---')
     else:
-        for jot in data['jots']:
-            content = ' '.join(jot['content'].splitlines())
-            id_str = f'#{jot["id"]}'
+        for jot in jots:
             ts = relative_time(jot['created_at'])
-            footer = f'{id_str}  {ts}'
-            text_w = max(len(content), len(footer))
-            print(f'╭{"─" * (text_w + 2)}╮')
-            print(f'│ {content:<{text_w}} │')
-            print(f'│ {id_str}{ts:>{text_w - len(id_str)}} │')
-            print(f'╰{"─" * (text_w + 2)}╯')
+            print(f'# {jot["id"]} ({ts})')
+            print(jot['content'])
+            print()
     total_pages = math.ceil(data['total'] / data['page_size']) if data['total'] else 1
     print(f'Page {data["page"]}/{total_pages} ({data["total"]} total)')
 
@@ -138,6 +143,9 @@ p_add.add_argument('text', nargs='?', default=None)
 p_list = sub.add_parser('list', help='List jots')
 p_list.add_argument('--page', '-p', type=int, default=1)
 p_list.add_argument('--plain', action='store_true')
+
+p_view = sub.add_parser('view', help='Print jot contents')
+p_view.add_argument('id', type=int)
 
 p_modify = sub.add_parser('edit', help='Edit a jot in $EDITOR')
 p_modify.add_argument('id', type=int)
@@ -154,6 +162,8 @@ if args.cmd == 'add':
     cmd_add(args)
 elif args.cmd == 'list':
     cmd_list(args)
+elif args.cmd == 'view':
+    cmd_view(args)
 elif args.cmd == 'edit':
     cmd_modify(args)
 elif args.cmd == 'delete':
