@@ -62,7 +62,17 @@ function my_prompt_hints() {
     echo -n "🐘🦖"
     return
   fi
-  echo -n "λ"
+  if [[ "$h" == "mama-laptop" ]]; then
+    echo -n "👵❄️"
+    return
+  fi
+  if [[ "$h" == "papa-laptop" ]]; then
+    echo -n "👴❄️"
+    return
+  fi
+
+    
+  echo -n "$h λ"
 }
 
 PROMPT='%c %{$fg[green]%}$(git_prompt_info)%{$fg[blue]%}'$'\n''$(my_prompt_hints)%{$reset_color%} '
